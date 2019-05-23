@@ -10,11 +10,10 @@
 </template>
 
 <script>
-  import Menu from "@/page/manageMenu";
-
+  import ManageMenu from "./ManageMenu";
   export default {
     name: "ManageIndex",
-    components: {Menu}
+    components: {ManageMenu}
   };
 </script>
 

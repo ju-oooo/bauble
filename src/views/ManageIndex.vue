@@ -1,19 +1,20 @@
 <template>
   <el-container>
-    <Menu></Menu>
+    <ManageMenu></ManageMenu>
     <el-main>
       <Header></Header>
-      <router-view></router-view>
+      <router-view ></router-view>
     </el-main>
   </el-container>
 
 </template>
 
 <script>
-  import ManageMenu from "./ManageMenu";
+  import ManageMenu from "@/views/ManageMenu"
+  import Header from "@/components/include/Header"
   export default {
     name: "ManageIndex",
-    components: {ManageMenu}
+    components: {ManageMenu, Header}
   };
 </script>
 

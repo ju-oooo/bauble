@@ -11,25 +11,29 @@ Vue.use(Router)
 export default new Router({
     routes: [
         {
-            path: '/m', name: 'ManageIndex', component: ManageIndex, children: [
-                //user 普通用户
+            path: '/', name: 'ManageIndex', component: ManageIndex, children: [
+                // user 普通用户
                 {
-                    path: '/m/user', name: 'ordinaryControl', component: OrdinaryControl
+                    path: '/m', name: 'ordinaryControl-m', component: OrdinaryControl, children: [
+
+                        {
+                            path: '/m/user', name: 'ordinaryControl-user', component: OrdinaryControl
+                        },
+                        //admin 管理员用户
+                        {
+                            path: '/m/admin', name: 'AdminControl', component: AdminControl
+                        },
+                        // admin/list
+                        {
+                            path: '/m/admin/list', name: 'OrdinaryList', component: OrdinaryList
+                        },
+                        //book
+                        {
+                            path: '/m/book', name: ' BookIndex', component: BookIndex
+                        }
+                    ]
                 },
-                //admin 管理员用户
-                {
-                    path: '/m/admin', name: 'AdminControl', component: AdminControl
-                },
-                // admin/list
-                {
-                    path: '/m/admin/list', name: 'OrdinaryList', component: OrdinaryList
-                },
-                //book
-                {
-                    path: '/m/book', name: ' BookIndex', component: BookIndex
-                }
             ]
         },
-
     ]
 });

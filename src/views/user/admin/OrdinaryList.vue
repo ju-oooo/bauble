@@ -135,7 +135,6 @@
 	.content {
 		padding: 1rem;
 	}
-
 </style>
 <style>
 	/*.el-button {*/

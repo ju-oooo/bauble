@@ -14,7 +14,13 @@
   import Header from "@/components/include/Header"
   export default {
     name: "ManageIndex",
-    components: {ManageMenu, Header}
+    components: {ManageMenu, Header},
+    data(){
+      return{
+
+      }
+    },
+
   };
 </script>
 

@@ -7,6 +7,7 @@ import UserInfo from './components/user/UserInfo'
 import AdminControl from './views/user/admin/AdminControl'
 import OrdinaryList from './views/user/admin/OrdinaryList'
 import BookIndex from './views/book/BookIndex'
+import CommodityIndex from './views/commodity/CommodityIndex'
 
 Vue.use(Router)
 
@@ -23,21 +24,25 @@ export default new Router({
                 },
                 //admin 管理员用户
                 {
-                    path: '/m/admin', name: 'adminControl', component: AdminControl
+                    path: 'admin', name: 'adminControl', component: AdminControl
                 },
                 //用户信息
                 {
-                    path: '/m/info', name: 'userInfo', component: UserInfo
+                    path: 'info', name: 'userInfo', component: UserInfo
                 },
                 // admin/list
                 {
-                    path: '/m/admin/list', name: 'ordinaryList', component: OrdinaryList
+                    path: 'admin/list', name: 'ordinaryList', component: OrdinaryList
                 },
                 //book
                 {
-                    path: '/m/book', name: ' bookIndex', component: BookIndex
+                    path: 'book', name: ' bookIndex', component: BookIndex
                 }
             ]
         },
+        {
+            path: '/commodity', name: 'commodityIndex', component: CommodityIndex
+        },
+
     ]
 });

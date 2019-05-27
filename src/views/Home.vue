@@ -1,7 +1,8 @@
 <template>
 	<div class="home">
-		首页
-		<router-link :to="{path:'/m'}">进入管理页面</router-link>
+		首页&nbsp;
+		<router-link :to="{path:'/m'}" style="color: #fff">管理&nbsp;</router-link>
+		<router-link :to="{name:'commodityIndex'}" style="color: #fff">商城&nbsp;</router-link>
 	</div>
 </template>
 
@@ -15,7 +16,9 @@
 	.home {
 		width: 500px;
 		height: 500px;
-		line-height: 500px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		background-color: #2c3e50;
 		color: #fff;
 		margin: auto;

@@ -7,7 +7,9 @@ import UserInfo from './components/user/UserInfo'
 import AdminControl from './views/user/admin/AdminControl'
 import OrdinaryList from './views/user/admin/OrdinaryList'
 import BookIndex from './views/book/BookIndex'
+import Commodity from './views/commodity/Commodity'
 import CommodityIndex from './views/commodity/CommodityIndex'
+import CommodityList from './views/commodity/CommodityList'
 
 Vue.use(Router)
 
@@ -41,7 +43,14 @@ export default new Router({
             ]
         },
         {
-            path: '/commodity', name: 'commodityIndex', component: CommodityIndex
+            path: '/commodity', component: Commodity, children: [
+                {
+                    path: '/', name: 'commodityIndex', component: CommodityIndex
+                },
+                {
+                    path: 'list', name: 'commodityList', component: CommodityList
+                }
+            ]
         },
 
     ]

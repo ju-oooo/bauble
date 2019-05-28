@@ -9,6 +9,7 @@
 			active-text-color="#E24F3A">
 		<el-menu-item index="/">首页</el-menu-item>
 		<el-menu-item index="/commodity">商城</el-menu-item>
+		<el-menu-item index="/commodity/list">商品列表</el-menu-item>
 		<el-submenu index="3">
 			<template slot="title">用户列表</template>
 			<el-menu-item index="2-1">我的</el-menu-item>

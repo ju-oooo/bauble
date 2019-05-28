@@ -2,7 +2,7 @@
 	<el-container>
 		<ManageMenu></ManageMenu>
 		<el-main>
-			<Header :activeIndex="'/commodity'" :backgroundColor="'#545C64'" :color="'#fff'"></Header>
+			<Header :activeIndex="'/'" :backgroundColor="'#545C64'" :color="'#fff'"></Header>
 			<router-view></router-view>
 		</el-main>
 	</el-container>

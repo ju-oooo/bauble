@@ -10,6 +10,8 @@ import BookIndex from './views/book/BookIndex'
 import Commodity from './views/commodity/Commodity'
 import CommodityIndex from './views/commodity/CommodityIndex'
 import CommodityList from './views/commodity/CommodityList'
+import CommodityDetails from './views/commodity/CommodityDetails'
+import CommodityLD from "./views/commodity/CommodityLD";
 
 Vue.use(Router)
 
@@ -48,8 +50,15 @@ export default new Router({
                     path: '/', name: 'commodityIndex', component: CommodityIndex
                 },
                 {
-                    path: 'list', name: 'commodityList', component: CommodityList
-                }
+                    path: 'o', component: CommodityLD, children: [
+                        {
+                            path: 'list', name: 'commodityList', component: CommodityList
+                        },
+                        {
+                            path: 'details', name: 'commodityDetails', component: CommodityDetails
+                        },
+                    ]
+                },
             ]
         },
 

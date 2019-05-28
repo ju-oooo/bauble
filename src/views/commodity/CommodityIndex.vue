@@ -126,12 +126,7 @@
 </script>
 
 <style lang="scss">
-	$red: #E74D4D;
-	$gray: #4D4D4D;
-	$white: #ffffff;
-	$black: #000000;
-	$light-gray: #F3F3F3;
-	$light-black: #333333;
+	@import '../../assets/css/commodity-color-theme';
 
 	.newProduct, .hotProduct {
 		padding: 1rem;
@@ -188,7 +183,6 @@
 			}
 
 			.buy {
-
 				position: relative;
 				display: inline-block;
 				width: 8rem;

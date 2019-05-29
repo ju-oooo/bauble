@@ -5,6 +5,7 @@
 	</div>
 </template>
 
+
 <script>
     import Header from '../../components/include/Header'
     export default {

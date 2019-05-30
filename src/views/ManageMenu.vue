@@ -93,7 +93,7 @@
         data() {
             return {
                 //屏幕高度
-                menuHeight: this.fullHeight-56+'px',
+                menuHeight: this.$fullHeight-56+'px',
                 //菜单栏宽度
                 asideWidth: '200px',
                 //菜单栏是否收起

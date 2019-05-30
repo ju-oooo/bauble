@@ -1,15 +1,19 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
-import store from './store'
+import router from 'router'
+import store from 'store'
+import axios from 'axios'
 import './assets/css/base.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css'
-
-Vue.config.productionTip = false
+//配置axios
+axios.defaults.baseURL = 'http://localhost:3333';
+axios.defaults.withCredentials=true;
+Vue.prototype.$axios = axios;
+Vue.config.productionTip = false;
 Vue.use(ElementUI);
-Vue.prototype.fullHeight = document.documentElement.clientHeight
+Vue.prototype.$fullHeight = document.documentElement.clientHeight;
 new Vue({
     router,
     store,
@@ -19,7 +23,7 @@ new Vue({
     },
     watch: {
         height() {
-            this.fullHeight = this.height
+            this.$fullHeight = this.height
         }
     },
     mounted() {

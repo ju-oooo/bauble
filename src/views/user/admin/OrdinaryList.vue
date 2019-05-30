@@ -147,7 +147,7 @@
                     }
                 ],
                 multipleSelection: [],
-                tableHeight: this.fullHeight - 150 + 'px',
+                tableHeight: this.$fullHeight - 150 + 'px',
             }
         },
         watch: {

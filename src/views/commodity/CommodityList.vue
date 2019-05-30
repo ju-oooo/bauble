@@ -1,14 +1,15 @@
 <template>
 	<div>
 		<commodity-classify></commodity-classify>
+
 		<el-row class="p-list" justify="start">
-			<router-link :to="{name:'commodityDetails'}" v-for="commodity of commodityList">
+			<router-link :to="{name:'commodityDetails'}" v-for="(commodity,index) of commodityList" :key="index">
 				<el-col :xs="12" :sm="8" :md="6" :xl="4" class="item">
 					<div>
-						<img src="../../assets/img/commodity/product-9.jpg" alt="">
+						<img :src="getImgUrl(commodity.image)" alt="">
 					</div>
-					<p class="title">漫威联名款洛基跑鞋彩虹桥洛基跑鞋</p>
-					<p class="price">￥529.00</p>
+					<p class="title">{{commodity.title}}</p>
+					<p class="price">￥{{commodity.price}}</p>
 					<a href="javascript:;" class="elect">立刻购买</a>
 				</el-col>
 			</router-link>
@@ -18,20 +19,47 @@
 
 <script>
     import CommodityClassify from "../../components/commodity/CommodityClassify";
+    import querystring from 'querystring'
 
     export default {
         name: "CommodityList",
         components: {CommodityClassify},
         data() {
             return {
+                count: 200,
+                pageCount: 1,
+                typeId: 11209,
                 commodityList: []
             }
-        }, methods: {
+        },
+        created() {
+            this.getCommodity();
+        },
+        methods: {
+            getImgUrl(temp) {
+                let urls = temp.split('#');
+                return urls[0] ? 'https:' + urls[0] : '/error/404.gif'
+            },
+            //获取商品
             getCommodity() {
-                this.$axios.post().then(res => {
-
+                let url = '/commodity/list';
+                let params = {
+                    count: this.count,
+                    pageCount: this.pageCount,
+                    typeId: this.typeId
+                };
+                this.$axios.post(
+                    url, querystring.stringify({
+                        count: this.count,
+                        pageCount: this.pageCount,
+                        typeId: this.typeId
+                    })
+                ).then(res => {
+                    //成功后加1
+                    this.pageCount++;
+                    this.commodityList = this.commodityList.concat(res.data.result);
                 }).catch(err => {
-
+                    console.log(err.err)
                 })
             }
         }

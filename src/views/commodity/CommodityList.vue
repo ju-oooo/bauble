@@ -42,7 +42,7 @@
             },
             //获取商品
             getCommodity() {
-                let url = '/commodity/list';
+                let url = '/api/commodity/list';
                 // let params = {
                 //     count: this.count,
                 //     pageCount: this.pageCount,

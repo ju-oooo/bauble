@@ -9,7 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css'
 //配置axios
 axios.defaults.baseURL = 'http://127.0.0.1:3333';
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
 Vue.use(ElementUI);

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<Header :activeIndex="'/commodity'" :backgroundColor="'#fff'" :color="'#545C64'"></Header>
-		<router-view/>
+		<router-view></router-view>
 	</div>
 </template>
 

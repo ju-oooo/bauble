@@ -43,11 +43,11 @@
             //获取商品
             getCommodity() {
                 let url = '/commodity/list';
-                let params = {
-                    count: this.count,
-                    pageCount: this.pageCount,
-                    typeId: this.typeId
-                };
+                // let params = {
+                //     count: this.count,
+                //     pageCount: this.pageCount,
+                //     typeId: this.typeId
+                // };
                 this.$axios.post(
                     url, querystring.stringify({
                         count: this.count,
@@ -56,10 +56,11 @@
                     })
                 ).then(res => {
                     //成功后加1
+					console.log(this.commodityList)
                     this.pageCount++;
                     this.commodityList = this.commodityList.concat(res.data.result);
                 }).catch(err => {
-                    console.log(err.err)
+                    console.log(123456,err)
                 })
             }
         }

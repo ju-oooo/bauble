@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<commodity-classify></commodity-classify>
+		<commodity-classify :classifyList="classifyList" :catalogueTypeList=catalogueTypeList></commodity-classify>
 
 		<el-row class="p-list" justify="start">
 			<router-link :to="{name:'commodityDetails'}" v-for="(commodity,index) of commodityList" :key="index">
@@ -23,17 +23,23 @@
 
     export default {
         name: "CommodityList",
+        props: ['classifyList'],
         components: {CommodityClassify},
         data() {
             return {
-                count: 200,
+                count: 20,
                 pageCount: 1,
                 typeId: 11209,
-                commodityList: []
+                commodityList: [],
+                catalogueTypeList: {}
             }
         },
         created() {
             this.getCommodity();
+        },
+        watch: {
+            $route() {
+            }
         },
         methods: {
             getImgUrl(temp) {
@@ -43,26 +49,24 @@
             //获取商品
             getCommodity() {
                 let url = '/commodity/list';
-                // let params = {
-                //     count: this.count,
-                //     pageCount: this.pageCount,
-                //     typeId: this.typeId
-                // };
+                let params = {
+                    count: this.count,
+                    pageCount: this.pageCount,
+                    typeId: this.typeId
+                };
                 this.$axios.post(
-                    url, querystring.stringify({
-                        count: this.count,
-                        pageCount: this.pageCount,
-                        typeId: this.typeId
-                    })
+                    url, querystring.stringify(params)
                 ).then(res => {
                     //成功后加1
-					console.log(this.commodityList)
                     this.pageCount++;
                     this.commodityList = this.commodityList.concat(res.data.result);
                 }).catch(err => {
-                    console.log(123456,err)
+                    this.$message("内部错误")
                 })
-            }
+
+            },
+
+
         }
     }
 </script>

@@ -50,9 +50,9 @@ export default new Router({
                     path: '/', name: 'commodityIndex', component: CommodityIndex
                 },
                 {
-                    path: 'o', component: CommodityLD, children: [
+                    path: 'o', component: CommodityLD, redirect: {name: 'commodityList'}, children: [
                         {
-                            path: 'list', name: 'commodityList', component: CommodityList
+                            path: 'list', name: 'commodityList', component: CommodityList,
                         },
                         {
                             path: 'details', name: 'commodityDetails', component: CommodityDetails

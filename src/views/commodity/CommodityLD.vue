@@ -10,7 +10,7 @@
 
 <script>
 
-    import CommoditySmallNav from "../../components/commodity/CommoditySmallNav";
+    import CommoditySmallNav from "@/components/commodity/CommoditySmallNav";
     export default {
         name: "CommodityLD",
         components: {CommoditySmallNav},
@@ -29,7 +29,7 @@
         methods: {
             getTypeList() {
 
-                let url = '/commodity/type';
+                let url = '/commodity/commodity/type';
                 this.$axios.post(url).then(res => {
                     this.classifyList = res.data.result;
                 }).catch(err => {

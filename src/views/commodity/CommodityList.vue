@@ -48,7 +48,7 @@
             },
             //获取商品
             getCommodity() {
-                let url = '/commodity/list';
+                let url = '/commodity/commodity/list';
                 let params = {
                     count: this.count,
                     pageCount: this.pageCount,

@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		首页&nbsp;
+		<router-link :to="{path:'/'}" style="color: #fff">首页&nbsp;</router-link>
 		<router-link :to="{path:'/m'}" style="color: #fff">管理&nbsp;</router-link>
 		<router-link :to="{name:'commodityIndex'}" style="color: #fff">商城&nbsp;</router-link>
 	</div>

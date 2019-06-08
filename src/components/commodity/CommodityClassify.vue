@@ -10,16 +10,16 @@
         {{type.name}}
       </el-tag>
     </div>
-    <el-breadcrumb v-if="catalogueTypeList.flag" class="commodity-breadcrumb">
+    <el-breadcrumb v-if="selectTypeList.flag" class="commodity-breadcrumb">
       <el-breadcrumb-item
         class="classify-item"
-        v-for="(type,index) of catalogueTypeList.typeList"
+        v-for="(type,index) of selectTypeList.typeList"
         :key="index"
         @click.native="addSearchList(index)">
         {{type.name}}
       </el-breadcrumb-item>
     </el-breadcrumb>
-
+    <!---->
     <el-breadcrumb v-else class="commodity-breadcrumb">
       <el-breadcrumb-item
         @click.native="getTypeList(catalogue.id)"
@@ -33,21 +33,28 @@
 </template>
 
 <script>
+  import {mapGetters, mapActions} from "vuex";
+
   export default {
     name: "CommodityClassify",
-    props: ['classifyList'],
     data() {
       return {
+        count: 20,
+        pageNum: 1,
         searchList: [],
-        catalogueTypeList: []
+        selectTypeList: []
       };
     },
-
+    computed: {
+      ...mapGetters({classifyList: 'classifyListGetter'})
+    },
     methods: {
+      init() {
+
+      },
       //根据分类获取详细分类
       getTypeList(catalogueId) {
-
-        let catalogueTypeList = {}, typeList = [], catalogue;
+        let selectTypeList = {}, typeList = [], catalogue;
         this.classifyList.type.forEach((elem) => {
           if (parseInt(elem.catalogueId) === parseInt(catalogueId)) {
             typeList.push(elem);
@@ -58,40 +65,53 @@
             catalogue = elem;
           }
         });
-        catalogueTypeList.flag = true;
-        catalogueTypeList.catalogue = catalogue;
-        catalogueTypeList.typeList = typeList;
-        this.catalogueTypeList = catalogueTypeList;
-        this.$parent.$parent.$parent.$parent.$data.linkList.push({link: catalogue.id, name: catalogue.name})
-        console.log(this.catalogueTypeList)
+        selectTypeList.flag = true;
+        selectTypeList.catalogue = catalogue;
+        selectTypeList.typeList = typeList;
+        this.selectTypeList = selectTypeList;
+        this.$parent.$parent.$parent.$parent.$data.linkList.push({link: catalogue.id, name: catalogue.name});
       },
+      //添加进搜索标签
       addSearchList(index) {
         let flag = false;
-        if (this.searchList.length > 1) {
+        if (this.searchList.length > 0) {
           for (let temp in this.searchList) {
-            console.log(this.searchList[index].id , this.catalogueTypeList.typeList[temp].id)
-            if (this.searchList[index].id == this.catalogueTypeList.typeList[temp].id) {
+            if (this.searchList[temp].id === this.selectTypeList.typeList[index].id) {
               this.$message.warning("此数据已添加");
               flag = true;
               break;
             }
           }
-          // this.searchList.forEach((elem) => {
-          //     if (elem === this.catalogueTypeList.typeList[index]) {
-          //         this.$message("此数据已添加", 'error');
-          //         flag = true;
-          //         return true;
-          //     }
-          // });
         }
-
         if (!flag) {
-          this.searchList.push(this.catalogueTypeList.typeList[index]);
+          this.searchList.push(this.selectTypeList.typeList[index]);
+          //调用数据接口
+          this.pageNum = 1;
+          this.getCommodityList();
         }
       },
       removeSearchList(index) {
         this.searchList.splice(index, 1);
+        //调用数据接口
+        this.pageNum = 1;
+        this.getCommodityList();
       },
+      getCommodityList() {
+        let idList = [];
+        this.searchList.forEach((elem) => {
+          idList.push(elem.id)
+        })
+        let payload = {
+          count: this.count,
+          pageNum: this.pageNum,
+          typeId: idList.join(',')
+        };
+        this.$store.dispatch('commodityListAction', payload).then(() => {
+          this.pageNum++;
+        }).catch(err => {
+          this.$message("内部错误")
+        })
+      }
     }
   }
 </script>

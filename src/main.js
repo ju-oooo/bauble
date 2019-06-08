@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import router from '@/router/router'
-import store from '@/store/store'
+import store from './store/store'
 import App from './App'
 import './assets/css/base.css'
 import ElementUI from 'element-ui'
@@ -12,11 +12,13 @@ import 'element-ui/lib/theme-chalk/display.css'
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
+
 Vue.prototype.$fullHeight = document.documentElement.clientHeight;
+
 new Vue({
   el: '#app',
-  router,
   store,
+  router,
   components: { App },
   template: '<App/>',
   render: h => h(App),

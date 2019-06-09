@@ -20,7 +20,7 @@
       </el-breadcrumb-item>
     </el-breadcrumb>
     <!---->
-    <el-breadcrumb v-else class="commodity-breadcrumb">
+    <el-breadcrumb v-else class="commodity-breadcrumb" separator="|">
       <el-breadcrumb-item
         @click.native="getTypeList(catalogue.id)"
         class="classify-item"
@@ -28,7 +28,7 @@
         :key="index">{{catalogue.name}}
       </el-breadcrumb-item>
     </el-breadcrumb>
-
+    <div v-if="loadingFlag">加载中</div>
   </div>
 </template>
 
@@ -39,14 +39,18 @@
     name: "CommodityClassify",
     data() {
       return {
-        count: 20,
-        pageNum: 1,
         searchList: [],
-        selectTypeList: []
+        selectTypeList: [],
       };
     },
     computed: {
-      ...mapGetters({classifyList: 'classifyListGetter'})
+      ...mapGetters({
+        classifyList: 'classifyListGetter',
+        pageNum: 'pageNumGetter',
+        count: 'countGetter',
+        loadingFlag: 'loadingFlagGetter',
+        dataEnd: 'dataEndGetter',
+      })
     },
     methods: {
       init() {
@@ -86,14 +90,16 @@
         if (!flag) {
           this.searchList.push(this.selectTypeList.typeList[index]);
           //调用数据接口
-          this.pageNum = 1;
+          let commit = [{key: 'commodityList', value: []}, {key: 'pageNum', value: 1}];
+          this.$store.commit('SET_STATEITEM', commit)
           this.getCommodityList();
         }
       },
       removeSearchList(index) {
         this.searchList.splice(index, 1);
         //调用数据接口
-        this.pageNum = 1;
+        let commit = [{key: 'commodityList', value: []}, {key: 'pageNum', value: 1}];
+        this.$store.commit('SET_STATEITEM', commit);
         this.getCommodityList();
       },
       getCommodityList() {
@@ -106,12 +112,22 @@
           pageNum: this.pageNum,
           typeId: idList.join(',')
         };
-        this.$store.dispatch('commodityListAction', payload).then(() => {
-          this.pageNum++;
-        }).catch(err => {
-          this.$message("内部错误")
-        })
+        this.$store.dispatch('commodityListAction', payload)
       }
+    },
+    mounted() {
+      //添加滚动事件
+      window.addEventListener('scroll', () => {
+        if (!this.loadingFlag && document.documentElement.scrollHeight - document.documentElement.scrollTop - window.innerHeight <= 200) {
+          if (!this.dataEnd) {
+            let commit = [{key: 'loadingFlag', value: true}];
+            this.$store.commit('SET_STATEITEM', commit);
+            this.getCommodityList();
+          }
+        }
+      })
+
+
     }
   }
 </script>

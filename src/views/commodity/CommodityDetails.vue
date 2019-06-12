@@ -1,4 +1,3 @@
-k
 <template>
   <el-row v-if="commodity.id >0">
     <!--        <el-col :md="2">&nbsp;</el-col>-->
@@ -31,24 +30,16 @@ k
       <p>您可能还喜欢</p>
       <el-row class="guess-list">
         <el-col :sm="12" :md="6" class="guess-item">
-
           <img src="../../assets/img/commodity/product-1.jpg" alt="">
-
         </el-col>
         <el-col :sm="12" :md="6" class="guess-item">
-
           <img src="../../assets/img/commodity/product-2.jpg" alt="">
-
         </el-col>
         <el-col :sm="12" :md="6" class="guess-item">
-
           <img src="../../assets/img/commodity/product-3.jpg" alt="">
-
         </el-col>
         <el-col :sm="12" :md="6" class="guess-item">
-
           <img src="../../assets/img/commodity/product-4.jpg" alt="">
-
         </el-col>
       </el-row>
     </el-col>
@@ -66,11 +57,10 @@ k
 
 <script>
   import {mapGetters, mapActions} from "vuex";
-  import CommoditySmallNav from "../../components/commodity/CommoditySmallNav";
 
   export default {
     name: "CommodityDetails",
-    components: {CommoditySmallNav},
+
     data(){
       return{
 

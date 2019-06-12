@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <!--  详细分类列表  -->
     <div v-if="selectTypeList.flag">
       <el-breadcrumb class="commodity-breadcrumb">
@@ -14,7 +13,6 @@
           @click.native="goTypeAll()">
           返回
         </el-breadcrumb-item>
-
       </el-breadcrumb>
       <!--  选中分类列表  -->
       <div class="tag">
@@ -79,9 +77,9 @@
        * 初始化当前数据列表
        */
       init() {
-        let commit = [{key: 'loadingFlag', value: true},{key: 'commodityList', value: []}, {key: 'pageNum', value: 1}];
+        let commit = [{key: 'loadingFlag', value: true}, {key: 'commodityList', value: []}, {key: 'pageNum', value: 1}];
         this.$store.commit('SET_STATEITEM', commit);
-        this.getCommodityAllList();
+        this.getHotCommodityList();
       },
       /**
        * 根据分类获取详细分类
@@ -102,12 +100,13 @@
         selectTypeList.catalogue = catalogue;
         selectTypeList.typeList = typeList;
         this.selectTypeList = selectTypeList;
-        //设置小导航
-        // this.linkList.push({link:'',name:catalogue.name});
-        // let commit = [{key: 'linkList', value: this.linkList}];
-        // this.$store.commit('SET_STATEITEM', commit);
-        // this.$parent.$parent.$parent.$parent.$data.linkList.push({link: catalogue.id, name: catalogue.name});
+        let commit = [{key: 'commodityList', value: []}, {key: 'pageNum', value: 1}];
+        this.$store.commit('SET_STATEITEM', commit)
+        this.getHotCommodityList()
       },
+      /**
+       * 返回并刷新
+       */
       goTypeAll() {
         this.searchList = [];
         this.selectTypeList = [];
@@ -146,7 +145,7 @@
         this.getCommodityList();
       },
       /**
-       * 获取数据列表
+       * 根据类型获取商品数据列表
        */
       getCommodityList(url) {
         let idList = [];
@@ -161,18 +160,25 @@
         };
         this.$store.dispatch('commodityListAction', payload)
       },
-      getCommodityAllList() {
+      /**
+       *获取热门商品数据列表
+       */
+      getHotCommodityList() {
         let idList = [];
-        this.searchList.forEach((elem) => {
-          idList.push(elem.id)
-        });
+        if (this.selectTypeList.flag) {
+          this.selectTypeList.typeList.forEach((elem) => {
+            idList.push(elem.id);
+          });
+        }
         let payload = {
-          url: '/bauble/commodity/',
           count: this.count,
           pageNum: this.pageNum,
           typeId: idList.join(',')
         };
-        this.$store.dispatch('commodityListAction', payload)
+        if (!idList.length > 0) {
+          payload.typeId = null;
+        }
+        this.$store.dispatch('commodityListAction', payload);
       },
 
     },
@@ -188,16 +194,15 @@
           if (!this.dataEnd) {
             let commit = [{key: 'loadingFlag', value: true}];
             this.$store.commit('SET_STATEITEM', commit);
-            if (this.selectTypeList.length >= 1) {
+            console.log(this.searchList.length)
+            if (this.searchList.length >= 1) {
               this.getCommodityList();
             } else {
-              this.getCommodityAllList();
+              this.getHotCommodityList();
             }
           }
         }
       })
-
-
     }
   }
 </script>

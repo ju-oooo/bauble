@@ -44,15 +44,9 @@ const actions = {
       this.$message("内部错误")
     })
   },
-  //获取商品列表
+  //获取热门商品列表
   commodityListAction: (context, payload) => {
-    let url = '/bauble/commodity/list';
-    if (!payload.url) {
-      console.log(payload.url)
-    } else {
-      url = payload.url;
-    }
-    axios.post(url, qs.stringify(payload))
+    axios.post('/bauble/commodity/', qs.stringify(payload))
       .then(result => {
         console.log(result['data'].result);
         context.commit('SET_COMMODITYLIST', result['data'].result)

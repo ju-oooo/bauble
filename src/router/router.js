@@ -13,7 +13,7 @@ import CommodityList from '@/views/commodity/CommodityList'
 import CommodityDetails from '@/views/commodity/CommodityDetails'
 import CommodityLD from "@/views/commodity/CommodityLD";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -61,6 +61,5 @@ export default new Router({
         },
       ]
     },
-
   ]
 });

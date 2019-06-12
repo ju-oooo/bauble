@@ -1,25 +1,43 @@
 <template>
   <div>
-    <div class="tag">
-      <el-tag v-for="(type,index) of searchList"
-              :key="index"
-              color="#fff"
-              closable
-              :disable-transitions="false"
-              @close="removeSearchList(index)">
-        {{type.name}}
-      </el-tag>
+
+    <!--  详细分类列表  -->
+    <div v-if="selectTypeList.flag">
+      <el-breadcrumb class="commodity-breadcrumb">
+        <el-breadcrumb-item
+          class="classify-item"
+          @click.native="addSearchList(index)">
+          {{selectTypeList.catalogue.name}}
+        </el-breadcrumb-item>
+        <el-breadcrumb-item
+          class="classify-item"
+          @click.native="goTypeAll()">
+          返回
+        </el-breadcrumb-item>
+
+      </el-breadcrumb>
+      <!--  选中分类列表  -->
+      <div class="tag">
+        <el-tag v-for="(type,index) of searchList"
+                :key="index"
+                color="#fff"
+                closable
+                :disable-transitions="false"
+                @close="removeSearchList(index)">
+          {{type.name}}
+        </el-tag>
+      </div>
+      <el-breadcrumb class="commodity-breadcrumb">
+        <el-breadcrumb-item
+          class="classify-item"
+          v-for="(type,index) of selectTypeList.typeList"
+          :key="index"
+          @click.native="addSearchList(index)">
+          {{type.name}}
+        </el-breadcrumb-item>
+      </el-breadcrumb>
     </div>
-    <el-breadcrumb v-if="selectTypeList.flag" class="commodity-breadcrumb">
-      <el-breadcrumb-item
-        class="classify-item"
-        v-for="(type,index) of selectTypeList.typeList"
-        :key="index"
-        @click.native="addSearchList(index)">
-        {{type.name}}
-      </el-breadcrumb-item>
-    </el-breadcrumb>
-    <!---->
+    <!--  总分类列表  -->
     <el-breadcrumb v-else class="commodity-breadcrumb" separator="|">
       <el-breadcrumb-item
         @click.native="getTypeList(catalogue.id)"
@@ -43,6 +61,9 @@
         selectTypeList: [],
       };
     },
+    created() {
+      this.init();
+    },
     computed: {
       ...mapGetters({
         classifyList: 'classifyListGetter',
@@ -50,13 +71,21 @@
         count: 'countGetter',
         loadingFlag: 'loadingFlagGetter',
         dataEnd: 'dataEndGetter',
+        linkList: 'linkListGetter',
       })
     },
     methods: {
+      /**
+       * 初始化当前数据列表
+       */
       init() {
-
+        let commit = [{key: 'loadingFlag', value: true},{key: 'commodityList', value: []}, {key: 'pageNum', value: 1}];
+        this.$store.commit('SET_STATEITEM', commit);
+        this.getCommodityAllList();
       },
-      //根据分类获取详细分类
+      /**
+       * 根据分类获取详细分类
+       */
       getTypeList(catalogueId) {
         let selectTypeList = {}, typeList = [], catalogue;
         this.classifyList.type.forEach((elem) => {
@@ -73,9 +102,20 @@
         selectTypeList.catalogue = catalogue;
         selectTypeList.typeList = typeList;
         this.selectTypeList = selectTypeList;
-        this.$parent.$parent.$parent.$parent.$data.linkList.push({link: catalogue.id, name: catalogue.name});
+        //设置小导航
+        // this.linkList.push({link:'',name:catalogue.name});
+        // let commit = [{key: 'linkList', value: this.linkList}];
+        // this.$store.commit('SET_STATEITEM', commit);
+        // this.$parent.$parent.$parent.$parent.$data.linkList.push({link: catalogue.id, name: catalogue.name});
       },
-      //添加进搜索标签
+      goTypeAll() {
+        this.searchList = [];
+        this.selectTypeList = [];
+        this.init();
+      },
+      /**
+       * 添加标签 并刷新数据
+       */
       addSearchList(index) {
         let flag = false;
         if (this.searchList.length > 0) {
@@ -95,6 +135,9 @@
           this.getCommodityList();
         }
       },
+      /**
+       * 删除指定搜索标签 并刷新数据
+       */
       removeSearchList(index) {
         this.searchList.splice(index, 1);
         //调用数据接口
@@ -102,27 +145,54 @@
         this.$store.commit('SET_STATEITEM', commit);
         this.getCommodityList();
       },
-      getCommodityList() {
+      /**
+       * 获取数据列表
+       */
+      getCommodityList(url) {
         let idList = [];
         this.searchList.forEach((elem) => {
           idList.push(elem.id)
-        })
+        });
         let payload = {
+          url: url,
           count: this.count,
           pageNum: this.pageNum,
           typeId: idList.join(',')
         };
         this.$store.dispatch('commodityListAction', payload)
-      }
+      },
+      getCommodityAllList() {
+        let idList = [];
+        this.searchList.forEach((elem) => {
+          idList.push(elem.id)
+        });
+        let payload = {
+          url: '/bauble/commodity/',
+          count: this.count,
+          pageNum: this.pageNum,
+          typeId: idList.join(',')
+        };
+        this.$store.dispatch('commodityListAction', payload)
+      },
+
     },
     mounted() {
-      //添加滚动事件
+      /**
+       * 添加滚动监听
+       */
       window.addEventListener('scroll', () => {
+        /**
+         * 距离下方200px请求数据
+         */
         if (!this.loadingFlag && document.documentElement.scrollHeight - document.documentElement.scrollTop - window.innerHeight <= 200) {
           if (!this.dataEnd) {
             let commit = [{key: 'loadingFlag', value: true}];
             this.$store.commit('SET_STATEITEM', commit);
-            this.getCommodityList();
+            if (this.selectTypeList.length >= 1) {
+              this.getCommodityList();
+            } else {
+              this.getCommodityAllList();
+            }
           }
         }
       })

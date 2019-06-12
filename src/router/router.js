@@ -55,7 +55,7 @@ export default new Router({
               path: 'list', name: 'commodityList', component: CommodityList,
             },
             {
-              path: 'details', name: 'commodityDetails', component: CommodityDetails
+              path: 'details/:commodityId', name: 'commodityDetails', component: CommodityDetails
             },
           ]
         },

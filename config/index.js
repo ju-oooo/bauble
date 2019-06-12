@@ -12,21 +12,22 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/bauble': {
-        target: 'http://localhost:3333',
+        // target: 'http://localhost:3333',
+        target: 'http://192.168.123.1:3333',
         changeOrigin: true,
         pathRewrite: {'^/bauble': '/'}
       }
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: '192.168.123.1', // can be overwritten by process.env.HOST
     port: 3666, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,//自动打开浏览器
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */

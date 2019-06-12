@@ -2,12 +2,13 @@
   <div>
     <commodity-classify></commodity-classify>
     <el-row class="p-list" justify="start">
-      <router-link :to="{name:'commodityDetails'}" v-for="(commodity,index) of commodityList" :key="index">
+      <router-link :to="{name:'commodityDetails',params:{commodityId:commodity.id}}"
+                   v-for="(commodity,index) of commodityList" :key="index">
         <el-col :xs="12" :sm="8" :md="6" :xl="4" class="item">
           <div>
-            <img :src="getImgUrl(commodity.image)" alt="" :onerror="errorImg"/>
+            <img v-lazy="getImgUrl(commodity.image)" alt=""/>
           </div>
-          <p class="title">{{commodity.title}}</p>
+          <p class="title" :title="commodity.title">{{commodity.title}}</p>
           <p class="price">￥{{commodity.price}}</p>
           <a href="javascript:;" class="elect">立刻购买</a>
         </el-col>
@@ -25,20 +26,18 @@
     components: {CommodityClassify},
     data() {
       return {
-        errorImg: 'this.src="/bauble/original/error/error-404.gif"',
-        count: 20,
-        pageNum: 1,
-        typeId: 11209,
-        // commodityList: [],
-        catalogueTypeList: {}
+        // count: 20,
+        // pageNum: 1,
+        // typeId: 11209,
+        // catalogueTypeList: {}
       }
     },
     created() {
       this.init()
     },
     watch: {
-      $route() {
-      }
+      // $route() {
+      // }
     },
     computed: {
       ...mapGetters({
@@ -56,21 +55,7 @@
       getImgUrl(temp) {
         let urls = temp.split('#');
         return urls[0] ? 'https:' + urls[0] : '/bauble/original/error/error-404.gif'
-      },
-      //获取商品列表
-      // getCommodityList() {
-      //   let payload = {
-      //     count: this.count,
-      //     pageNum: this.pageNum,
-      //     typeId: this.typeId
-      //   };
-      //   this.$store.dispatch('commodityListAction', payload).then(() => {
-      //     this.pageNum++;
-      //   }).catch(err => {
-      //     this.$message("内部错误")
-      //   })
-      // }
-
+      }
     }
   }
 </script>
@@ -84,7 +69,6 @@
 
     .item {
       box-sizing: border-box;
-      /*margin: 0.5rem;*/
       padding: 1rem;
       overflow: hidden;
       color: $gray;
@@ -100,6 +84,7 @@
         overflow: hidden;
 
         img {
+          min-height: 220px;
           width: 100%;
           transition: all 0.4s;
 

@@ -84,7 +84,7 @@
         overflow: hidden;
 
         img {
-          min-height: 220px;
+          height: 220px;
           width: 100%;
           transition: all 0.4s;
 

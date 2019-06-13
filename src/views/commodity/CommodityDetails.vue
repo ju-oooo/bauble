@@ -4,14 +4,14 @@
     <el-col :span="24">
       <el-row class="detail" justify="center">
         <el-col :sm="24" :md="12" class="detail-left">
-          <img v-lazy="commodity.image" alt="">
+          <img :src="commodity.image" :title="commodity.title">
         </el-col>
         <el-col :sm="24" :md="12" class="detail-right">
           <p class="title">
             {{commodity.title}}
           </p>
           <p class="price">￥ {{commodity.price}}</p>
-          <p class="type">商品类型&nbsp;:&nbsp;<span>{{commodity.typeId}}</span></p>
+          <p class="type">商品类型&nbsp;:&nbsp;<span>{{getType()}}</span></p>
           <p class="time">发布时间&nbsp;:&nbsp;<span>今年</span></p>
           <p class="surplus">剩余库存&nbsp;:&nbsp;<span>999+</span></p>
           <p class="hint">温馨提示·支持7天无理由退货·此商品不可使用优惠券</p>
@@ -29,18 +29,13 @@
     <el-col :span="24" class="guess">
       <p>您可能还喜欢</p>
       <el-row class="guess-list">
-        <el-col :sm="12" :md="6" class="guess-item">
-          <img src="../../assets/img/commodity/product-1.jpg" alt="">
-        </el-col>
-        <el-col :sm="12" :md="6" class="guess-item">
-          <img src="../../assets/img/commodity/product-2.jpg" alt="">
-        </el-col>
-        <el-col :sm="12" :md="6" class="guess-item">
-          <img src="../../assets/img/commodity/product-3.jpg" alt="">
-        </el-col>
-        <el-col :sm="12" :md="6" class="guess-item">
-          <img src="../../assets/img/commodity/product-4.jpg" alt="">
-        </el-col>
+        <router-link :to="{name:'commodityDetails',params:{commodityId:hotCommodity.id}}"
+                     v-for="(hotCommodity,index) in hotCommodityList" :key="index">
+          <el-col :sm="12" :md="6"
+                  class="guess-item">
+            <img :src="getImgUrl(hotCommodity.image)" :title="hotCommodity.title">
+          </el-col>
+        </router-link>
       </el-row>
     </el-col>
     <el-col class="introduce">
@@ -49,7 +44,7 @@
         <a class="title-sty">商品评价</a>
       </p>
       <div class="introduce-details" v-for="(item,index) in commodity.details" :key="index">
-        <img v-lazy="item">
+        <img :src="item">
       </div>
     </el-col>
   </el-row>
@@ -61,31 +56,51 @@
   export default {
     name: "CommodityDetails",
 
-    data(){
-      return{
-
+    data() {
+      return {
+        type: ''
       }
     },
     created() {
       this.getCommodityDetails();
     },
-    computed:{
-      ...mapGetters({'commodity':'commodityDetailsGetter'})
+    computed: {
+      ...mapGetters({
+        'classifyList': 'classifyListGetter',
+        'commodity': 'commodityDetailsGetter',
+        'hotCommodityList': 'hotCommodityListGetter'
+      }),
     },
-    watch:{
+    watch: {
       // 如果路由有变化，会再次执行该方法
       "$route": "getCommodityDetails",
-    },methods:{
+    }, methods: {
       ...mapActions({
-        'commodityDetails':'commodityDetailsAction'
+        'commodityDetails': 'commodityDetailsAction'
       }),
-      getCommodityDetails(){
+      getCommodityDetails() {
         let commodityId = this.$route.params.commodityId;
         console.log(commodityId);
         let payload = {
           commodityId: commodityId
         };
         this.$store.dispatch('commodityDetailsAction', payload)
+      },
+      //图片Url解析
+      getImgUrl(temp) {
+        let urls = temp.split('#');
+        return urls[0] ? 'https:' + urls[0] : '/bauble/original/error/error-404.gif'
+      },
+      getType() {
+        let id = this.commodity.typeId;
+        let name;
+        this.classifyList.type.forEach((elem) => {
+          if (parseInt(elem.id) === parseInt(id)) {
+            name = elem.name;
+          }
+        });
+        return name;
+
       }
     }
   }
@@ -131,6 +146,7 @@
 
     .introduce-details {
       text-align: center;
+
       img {
         width: 100%;
         max-width: 70rem;
@@ -161,7 +177,7 @@
       }
 
       img {
-        min-height: 15rem;
+        height: 220px;
         width: 100%;
       }
 

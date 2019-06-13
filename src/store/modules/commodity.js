@@ -13,6 +13,8 @@ const state = {
   classifyList: [],
   //商品列表
   commodityList: [],
+  //热门商品列表
+  hotCommodityList:[],
   pageNum: 1,
   count: 20,
   loadingFlag: false,
@@ -30,6 +32,7 @@ const getters = {
   loadingFlagGetter: state => state.loadingFlag,
   dataEndGetter: state => state.dataEnd,
   commodityDetailsGetter: state => state.commodityDetails,
+  hotCommodityListGetter: state => state.hotCommodityList,
 }
 
 //action 异步的操作
@@ -57,10 +60,12 @@ const actions = {
   //获取商品详情
   commodityDetailsAction: (context, payload) => {
     axios.post('/bauble/commodity/details', qs.stringify(payload)).then(result => {
-      let res = result['data'].result;
+      let res = result['data'].details;
       res.image = res.image.replace('n7', 'n1')
       res.details = res.details.split('#');
-      context.commit('SET_COMMODITYDETAILS', result['data'].result)
+      context.commit('SET_COMMODITYDETAILS', res)
+      context.commit('SET_HOTCOMMODITYLIST', result['data'].hotCommodityList)
+      console.log(result['data'].hotCommodityList)
     }).catch(err => {
       // this.state.$message("内部错误")
     })
@@ -68,12 +73,21 @@ const actions = {
 }
 //mutation
 const mutations = {
+  //设置热门商品列表
+  SET_HOTCOMMODITYLIST: (state, param) => {
+    state.hotCommodityList ='';
+    state.hotCommodityList = param;
+  },
+  //设置商品详情
   SET_COMMODITYDETAILS: (state, param) => {
-    state.commodityDetails = param
+    state.commodityDetails ='';
+    state.commodityDetails = param;
   },
+  //设置类型详情
   SET_CLASSIFYLIST: (state, param) => {
-    state.classifyList = param
+    state.classifyList = param;
   },
+  //设置商品列表
   SET_COMMODITYLIST: (state, param) => {
     state.pageNum++;
     state.loadingFlag = false;
@@ -94,7 +108,7 @@ const mutations = {
    */
   SET_STATEITEM: (state, param) => {
     param.forEach((elem) => {
-      console.log(elem)
+      console.log(elem);
       state[elem.key] = elem.value;
     })
   },

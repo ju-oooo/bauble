@@ -14,12 +14,14 @@ const state = {
   //商品列表
   commodityList: [],
   //热门商品列表
-  hotCommodityList:[],
+  hotCommodityList: [],
   pageNum: 1,
   count: 20,
   loadingFlag: false,
   dataEnd: false,
-  commodityDetails: {}
+  commodityDetails: {},
+  //购物车列表
+  shoppingCardList: []
 }
 
 //getter 抛出去的数据
@@ -33,6 +35,7 @@ const getters = {
   dataEndGetter: state => state.dataEnd,
   commodityDetailsGetter: state => state.commodityDetails,
   hotCommodityListGetter: state => state.hotCommodityList,
+  shoppingCardListGetter: state => state.shoppingCardList,
 }
 
 //action 异步的操作
@@ -47,7 +50,7 @@ const actions = {
       this.$message("内部错误")
     })
   },
-  //获取热门商品列表
+  //获取商品列表
   commodityListAction: (context, payload) => {
     axios.post('/bauble/commodity/', qs.stringify(payload))
       .then(result => {
@@ -70,18 +73,34 @@ const actions = {
       // this.state.$message("内部错误")
     })
   },
+  // 获取购物车列表
+  shoppingCardListAction: (context, payload) => {
+    axios.post('/bauble/commodity/shoppingCard', qs.stringify(payload))
+      .then(result => {
+        console.log(result['data'].result);
+        context.commit('SET_SHOPPINGCARDLIST', result['data'].result)
+      }).catch(err => {
+      // this.state.$message("内部错误")
+    })
+  },
 }
 //mutation
 const mutations = {
+  //设置购物车商品列表
+  SET_SHOPPINGCARDLIST: (state, param) => {
+    state.shoppingCardList = '';
+    state.shoppingCardList = param;
+  },
   //设置热门商品列表
   SET_HOTCOMMODITYLIST: (state, param) => {
-    state.hotCommodityList ='';
+    state.hotCommodityList = '';
     state.hotCommodityList = param;
   },
   //设置商品详情
   SET_COMMODITYDETAILS: (state, param) => {
-    state.commodityDetails ='';
+    state.commodityDetails = '';
     state.commodityDetails = param;
+    console.log(state.commodityDetails);
   },
   //设置类型详情
   SET_CLASSIFYLIST: (state, param) => {

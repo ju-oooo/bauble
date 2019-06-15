@@ -11,7 +11,7 @@
     </el-row>
     <div class="hotPL">
       <el-row class="hotProduct">
-        <el-col :sm="24" :md="9" class="series">
+        <el-col :xs="24" :sm="9" class="series">
           <div class="series-hover">
             <img src="../../assets/img/commodity/product-3.jpg" alt="">
             <div class="elect">
@@ -27,7 +27,7 @@
             <span>篮球服装</span>
           </p>
         </el-col>
-        <el-col :sm="24" :md="9" class="series">
+        <el-col :xs="24" :sm="9" class="series">
           <div class="series-hover">
             <img src="../../assets/img/commodity/product-2.jpg" alt="">
             <div class="elect">
@@ -46,7 +46,7 @@
         </el-col>
       </el-row>
       <el-row class="hotProduct">
-        <el-col :sm="24" :md="6" class="series">
+        <el-col :xs="24" :sm="6" class="series">
           <div class="series-hover">
             <img src="../../assets/img/commodity/product-1.jpg" alt="">
             <div class="elect">
@@ -57,7 +57,7 @@
           </div>
           <p class="title">时尚潮服系列</p>
         </el-col>
-        <el-col :sm="24" :md="6" class="series">
+        <el-col :xs="24" :sm="6" class="series">
           <div class="series-hover">
             <img src="../../assets/img/commodity/product-4.jpg" alt="">
             <div class="elect">
@@ -68,7 +68,7 @@
           </div>
           <p class="title">2019年夏上新</p>
         </el-col>
-        <el-col :sm="24" :md="6" class="series">
+        <el-col :xs="24" :sm="6"  class="series">
           <div class="series-hover">
             <img src="../../assets/img/commodity/product-5.jpg" alt="">
             <div class="elect">
@@ -86,10 +86,9 @@
         <span class="letter">A-FLASHFOAM闪能科技</span>
         <span class="letter">轻量化EVA高回弹复合材料，安踏自主研发，为跑者提供充足动力。</span>
       </p>
-
     </el-row>
     <el-row class="newProduct">
-      <el-col :sm="24" :md="9" class="commodity">
+      <el-col :xs="24" :sm="9"  class="commodity">
         <div>
           <a href="#">
             <img src="../../assets/img/commodity/product-6.jpg" alt="">
@@ -99,7 +98,7 @@
         </div>
         <p><a href="#" class="buy">立刻购买</a></p>
       </el-col>
-      <el-col :sm="24" :md="9" class="commodity">
+      <el-col :xs="24" :sm="9"  class="commodity">
         <div>
           <a href="#">
             <img src="../../assets/img/commodity/product-7.jpg" alt="">
@@ -134,7 +133,6 @@
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
-
     img {
       width: 100%;
     }
@@ -171,7 +169,6 @@
       .title {
         font-size: 1.7rem;
         padding: 0.5rem 0;
-
       }
 
       .describe {
@@ -323,12 +320,6 @@
     }
   }
 
-  /*img {*/
-  /*    width: 100%;*/
-  /*    min-height: 360px;*/
-  /*    min-width: 1400px;*/
-  /*    height: auto;*/
-  /*}*/
 
   /*修改轮播图*/
   /*修改指示器*/

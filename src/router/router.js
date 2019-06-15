@@ -58,10 +58,10 @@ export default new Router({
             {
               path: 'details/:commodityId', name: 'commodityDetails', component: CommodityDetails
             },
-            {
-              path: 'shoppingCard', name: 'CommodityShoppingCard', component: CommodityShoppingCard
-            },
           ]
+        },
+        {
+          path: 'shoppingCard', name: 'commodityShoppingCard', component: CommodityShoppingCard
         },
       ]
     },

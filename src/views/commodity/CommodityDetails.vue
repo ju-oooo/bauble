@@ -1,10 +1,10 @@
 <template>
-  <el-row v-if="commodity.id >0">
+  <el-row v-if="commodity.id > 0">
     <!--        <el-col :md="2">&nbsp;</el-col>-->
     <el-col :span="24">
       <el-row class="detail" justify="center">
         <el-col :sm="24" :md="12" class="detail-left">
-          <img :src="commodity.image" :title="commodity.title">
+          <img v-lazy="commodity.image" :title="commodity.title">
         </el-col>
         <el-col :sm="24" :md="12" class="detail-right">
           <p class="title">
@@ -26,25 +26,15 @@
         <a href="javascript:;" class="collection">收藏商品+</a>
       </p>
     </el-col>
-    <el-col :span="24" class="guess">
-      <p>您可能还喜欢</p>
-      <el-row class="guess-list">
-        <router-link :to="{name:'commodityDetails',params:{commodityId:hotCommodity.id}}"
-                     v-for="(hotCommodity,index) in hotCommodityList" :key="index">
-          <el-col :sm="12" :md="6"
-                  class="guess-item">
-            <img :src="getImgUrl(hotCommodity.image)" :title="hotCommodity.title">
-          </el-col>
-        </router-link>
-      </el-row>
-    </el-col>
+    <!--  猜你喜欢  -->
+    <commodity-related></commodity-related>
     <el-col class="introduce">
       <p class="title">
         <a class="title-sty active">产品细节</a>
         <a class="title-sty">商品评价</a>
       </p>
       <div class="introduce-details" v-for="(item,index) in commodity.details" :key="index">
-        <img :src="item">
+        <img v-lazy="item">
       </div>
     </el-col>
   </el-row>
@@ -52,10 +42,11 @@
 
 <script>
   import {mapGetters, mapActions} from "vuex";
+  import CommodityRelated from "../../components/commodity/CommodityRelated";
 
   export default {
     name: "CommodityDetails",
-
+    components: {CommodityRelated},
     data() {
       return {
         type: ''
@@ -75,22 +66,19 @@
       // 如果路由有变化，会再次执行该方法
       "$route": "getCommodityDetails",
     }, methods: {
-      ...mapActions({
-        'commodityDetails': 'commodityDetailsAction'
-      }),
+      // ...mapActions({
+      //   'commodityDetails': 'commodityDetailsAction'
+      // }),
+      //获取商品详情
       getCommodityDetails() {
         let commodityId = this.$route.params.commodityId;
         console.log(commodityId);
         let payload = {
           commodityId: commodityId
         };
-        this.$store.dispatch('commodityDetailsAction', payload)
+        this.$store.dispatch('commodityDetailsAction', payload);
       },
-      //图片Url解析
-      getImgUrl(temp) {
-        let urls = temp.split('#');
-        return urls[0] ? 'https:' + urls[0] : '/bauble/original/error/error-404.gif'
-      },
+      //根据id 获取类型名称
       getType() {
         let id = this.commodity.typeId;
         let name;
@@ -100,7 +88,6 @@
           }
         });
         return name;
-
       }
     }
   }
@@ -157,35 +144,7 @@
   }
 
   //产品细节 end
-  //猜你喜欢 start
-  .guess {
-    padding: 4rem 0;
-    border-bottom: 0.1rem solid $gray;
-    border-top: 0.1rem solid $gray;
 
-    & > p {
-      font-size: 2rem;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .guess-list {
-      .guess-item {
-        padding: 1rem;
-        overflow: hidden;
-        height: 15rem;
-      }
-
-      img {
-        height: 220px;
-        width: 100%;
-      }
-
-
-    }
-  }
-
-  //猜你喜欢 end
   //商品详情 start
   .detail {
     box-sizing: border-box;

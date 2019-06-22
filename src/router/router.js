@@ -12,7 +12,7 @@ import CommodityIndex from '@/views/commodity/CommodityIndex'
 import CommodityList from '@/views/commodity/CommodityList'
 import CommodityDetails from '@/views/commodity/CommodityDetails'
 import CommodityLD from "@/views/commodity/CommodityLD";
-import CommodityShoppingCard from "@/views/commodity/CommodityShoppingCard";
+import CommodityShoppingCart from "@/views/commodity/CommodityShoppingCart";
 
 Vue.use(Router);
 
@@ -61,7 +61,7 @@ export default new Router({
           ]
         },
         {
-          path: 'shoppingCard', name: 'commodityShoppingCard', component: CommodityShoppingCard
+          path: 'shoppingCart', name: 'commodityShoppingCart', component: CommodityShoppingCart
         },
       ]
     },

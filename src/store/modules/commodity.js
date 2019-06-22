@@ -21,7 +21,7 @@ const state = {
   dataEnd: false,
   commodityDetails: {},
   //购物车列表
-  shoppingCardList: []
+  shoppingCartList: []
 }
 
 //getter 抛出去的数据
@@ -35,11 +35,21 @@ const getters = {
   dataEndGetter: state => state.dataEnd,
   commodityDetailsGetter: state => state.commodityDetails,
   hotCommodityListGetter: state => state.hotCommodityList,
-  shoppingCardListGetter: state => state.shoppingCardList,
+  shoppingCartListGetter: state => state.shoppingCartList,
 }
 
 //action 异步的操作
 const actions = {
+  //添加商品进购物车
+  addShoppingCartAction: (context) => {
+    axios.post("/bauble/commodity/")
+      .then(result => {
+        console.log(result['data'].result);
+        context.commit('SET_SHOPPINGCARTLIST', result['data'].result)
+      }).catch(err => {
+      this.$message("内部错误")
+    })
+  },
   //获取商品类型以及分类
   classifyListAction: (context) => {
     axios.post("/bauble/commodity/type")
@@ -47,7 +57,7 @@ const actions = {
         console.log(result['data'].result);
         context.commit('SET_CLASSIFYLIST', result['data'].result)
       }).catch(err => {
-      this.$message("内部错误")
+      // this.$message("内部错误")
     })
   },
   //获取商品列表
@@ -87,9 +97,9 @@ const actions = {
 //mutation
 const mutations = {
   //设置购物车商品列表
-  SET_SHOPPINGCARDLIST: (state, param) => {
-    state.shoppingCardList = '';
-    state.shoppingCardList = param;
+  SET_SHOPPINGCARTLIST: (state, param) => {
+    state.shoppingCartList = '';
+    state.shoppingCartList = param;
   },
   //设置热门商品列表
   SET_HOTCOMMODITYLIST: (state, param) => {

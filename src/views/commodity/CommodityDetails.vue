@@ -27,7 +27,9 @@
       </p>
     </el-col>
     <!--  猜你喜欢  -->
-    <commodity-related></commodity-related>
+    <el-col>
+      <commodity-related></commodity-related>
+    </el-col>
     <el-col class="introduce">
       <p class="title">
         <a class="title-sty active">产品细节</a>
@@ -229,6 +231,10 @@
             background-color: $red;
           }
 
+          &:hover {
+            opacity: 0.8;
+            cursor: pointer;
+          }
         }
       }
     }
@@ -252,12 +258,23 @@
       &.share {
         background-color: $red;
         color: $white;
+
+        &:hover {
+          opacity: 0.8;
+          cursor: pointer;
+        }
       }
 
       &.collection {
-        background-color: $light-gray;
+        background-color: $light-o-gray;
         color: $black;
+
+        &:hover {
+          opacity: 0.8;
+          cursor: pointer;
+        }
       }
+
     }
   }
 

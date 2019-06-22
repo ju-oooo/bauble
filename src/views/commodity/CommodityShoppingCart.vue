@@ -83,7 +83,7 @@
   import CommodityRelated from "../../components/commodity/CommodityRelated";
 
   export default {
-    name: "CommodityShoppingCard",
+    name: "CommodityShoppingCart",
     components: {CommodityRelated},
     data() {
       return {
@@ -99,13 +99,13 @@
       }
     },
     computed: {
-      ...mapGetters({'shoppingCardList': 'shoppingCardListGetter'})
+      ...mapGetters({'shoppingCartList': 'shoppingCartListGetter'})
     },
     methods: {
-      ...mapActions({'getShoppingCardList': 'shoppingCardListAction'}),
+      ...mapActions({'getShoppingCartList': 'shoppingCartListAction'}),
       //取消全选
       toggleSelection(rows) {
-        console.log(1321, rows)
+        console.log(1321, rows);
         if (rows) {
           rows.forEach(row => {
             this.$refs.multipleTable.toggleRowSelection(row);

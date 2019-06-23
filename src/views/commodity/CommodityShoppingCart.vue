@@ -13,7 +13,7 @@
     <el-main>
       <div class="cart-item">
         <el-table
-          :data="tableData"
+          :data="shoppingCartList"
           :default-sort="{prop: 'date', order: 'descending'}"
           @selection-change="handleSelectionChange"
           ref="multipleTable"
@@ -87,15 +87,6 @@
     components: {CommodityRelated},
     data() {
       return {
-        tableData: [{
-          id: 131587,
-          image: "https://img10.360buyimg.com/cms/s80x80_jfs/t1/27029/16/10303/84563/5c860b8cE7ae9705f/91cbbed521515472.jpg",
-          title: '松下（Panasonic） 32/43英寸 窄边框老人机高清液晶 松下（Panasonic） 32/43英寸 窄边框老人机高清液晶 松下（Panasonic） 32/43英寸 窄边框老人机高清液晶 松下（Panasonic） 32/43英寸 窄边框老人机高清液晶 平板电视机 32寸液晶',
-          price: 999999,
-          quantity: 1,
-          subtotal: 99999999999
-        },
-        ]
       }
     },
     computed: {

@@ -22,7 +22,7 @@
         </el-col>
       </el-row>
       <p class="operation">
-        <a href="javascript:;" @click="" class="share">分享</a>
+        <a :href="'http:'+commodity.realLink" target="_blank" class="share">进入店铺</a>
         <a href="javascript:;" class="collection">收藏商品+</a>
       </p>
     </el-col>

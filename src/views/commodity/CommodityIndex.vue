@@ -2,9 +2,9 @@
   <div>
     <el-row class="">
       <el-col :span="24">
-        <el-carousel indicator-position="outside" trigger="click" height="500px">
+        <el-carousel indicator-position="outside" trigger="click" :height="imgHeight">
           <el-carousel-item v-for="(item,index) in slideList" :key="index">
-            <img ref="img" :src="require('../../assets/img/commodity/'+item)" :alt="index"/>
+            <img :src="require('../../assets/img/commodity/'+item)" :alt="index"/>
           </el-carousel-item>
         </el-carousel>
       </el-col>
@@ -68,7 +68,7 @@
           </div>
           <p class="title">2019年夏上新</p>
         </el-col>
-        <el-col :xs="24" :sm="6"  class="series">
+        <el-col :xs="24" :sm="6" class="series">
           <div class="series-hover">
             <img src="../../assets/img/commodity/product-5.jpg" alt="">
             <div class="elect">
@@ -88,7 +88,7 @@
       </p>
     </el-row>
     <el-row class="newProduct">
-      <el-col :xs="24" :sm="9"  class="commodity">
+      <el-col :xs="24" :sm="9" class="commodity">
         <div>
           <a href="#">
             <img src="../../assets/img/commodity/product-6.jpg" alt="">
@@ -98,7 +98,7 @@
         </div>
         <p><a href="#" class="buy">立刻购买</a></p>
       </el-col>
-      <el-col :xs="24" :sm="9"  class="commodity">
+      <el-col :xs="24" :sm="9" class="commodity">
         <div>
           <a href="#">
             <img src="../../assets/img/commodity/product-7.jpg" alt="">
@@ -118,8 +118,22 @@
     name: "CommodityIndex",
     data() {
       return {
+        imgHeight: 0,
         slideList: ['slide1.jpg', 'slide2.jpg', 'slide3.jpg', 'slide4.jpg']
       }
+    },
+    created() {
+      this.setImgHeight();
+      console.log(this.imgHeight)
+    }
+    , methods: {
+      setImgHeight() {
+        this.imgHeight = (document.body.clientWidth / 4 > 300 ? document.body.clientWidth / 4 : 300) + "px";
+      }
+    }, mounted() {
+      window.addEventListener('resize', () => {
+        this.setImgHeight()
+      }, false)
     }
   }
 </script>
@@ -133,6 +147,7 @@
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
+
     img {
       width: 100%;
     }
@@ -323,6 +338,12 @@
 
   /*修改轮播图*/
   /*修改指示器*/
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   .el-carousel__indicators {
     padding-top: 1rem !important;
     margin-bottom: 1rem !important;

@@ -4,11 +4,6 @@ import {Message} from 'element-ui'
 //商品
 //初始化数据
 const state = {
-  //导航链接列表
-  linkList: [
-    {link: 'commodityIndex', name: '首页'},
-    {link: 'commodityList', name: '分类'},
-  ],
   //类型列表
   classifyList: [],
   //商品列表
@@ -21,7 +16,16 @@ const state = {
   dataEnd: false,
   commodityDetails: {},
   //购物车列表
-  shoppingCartList: []
+  shoppingCartList: [
+    {
+      id: 131587,
+      image: "https://img10.360buyimg.com/cms/s80x80_jfs/t1/27029/16/10303/84563/5c860b8cE7ae9705f/91cbbed521515472.jpg",
+      title: '松下（Panasonic） 32/43英寸 窄边框老人机高清液晶 松下（Panasonic） 32/43英寸 窄边框老人机高清液晶 松下（Panasonic） 32/43英寸 窄边框老人机高清液晶 松下（Panasonic） 32/43英寸 窄边框老人机高清液晶 平板电视机 32寸液晶',
+      price: 999999,
+      quantity: 1,
+      subtotal: 99999999999
+    }
+  ]
 }
 
 //getter 抛出去的数据
@@ -84,7 +88,7 @@ const actions = {
     })
   },
   // 获取购物车列表
-  shoppingCardListAction: (context, payload) => {
+  shoppingCartListAction: (context, payload) => {
     axios.post('/bauble/commodity/shoppingCard', qs.stringify(payload))
       .then(result => {
         console.log(result['data'].result);

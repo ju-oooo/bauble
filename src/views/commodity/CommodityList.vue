@@ -3,14 +3,14 @@
     <commodity-classify></commodity-classify>
     <el-row class="p-list" justify="start">
       <router-link :to="{name:'commodityDetails',params:{commodityId:commodity.id}}"
-                   v-for="(commodity,index) of commodityList" :key="index">
+                   v-for="(commodity,index) of commodityList" :key="index" target="_blank">
         <el-col :xs="12" :sm="8" :md="6" :xl="4" class="item">
           <div>
             <img v-lazy="getImgUrl(commodity.image)" alt=""/>
           </div>
           <p class="title" :title="commodity.title">{{commodity.title}}</p>
           <p class="price">￥{{commodity.price}}</p>
-          <a href="javascript:;" class="elect">立刻购买</a>
+          <span class="elect">查看详情</span>
         </el-col>
       </router-link>
     </el-row>
@@ -110,7 +110,7 @@
       }
 
       .elect {
-        color: $black;
+        color: $red;
         display: block;
         margin: 0.25rem auto;
         width: 5rem;

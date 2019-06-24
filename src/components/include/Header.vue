@@ -15,6 +15,8 @@
       <el-menu-item index="2-1">我的</el-menu-item>
       <el-menu-item index="2-2">注销</el-menu-item>
     </el-submenu>
+    <el-menu-item index="/register" style="float: right;">注册</el-menu-item>
+    <el-menu-item index="/login" style="float: right;">登录</el-menu-item>
   </el-menu>
 </template>
 

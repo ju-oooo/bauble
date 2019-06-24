@@ -7,6 +7,9 @@ import UserInfo from '@/components/user/UserInfo'
 import AdminControl from '@/views/user/admin/AdminControl'
 import OrdinaryList from '@/views/user/admin/OrdinaryList'
 
+import Login from '@/views/user/Login'
+import Register from '@/views/user/Register'
+
 import Commodity from '@/views/commodity/Commodity'
 import CommodityIndex from '@/views/commodity/CommodityIndex'
 import CommodityList from '@/views/commodity/CommodityList'
@@ -20,6 +23,12 @@ export default new Router({
   routes: [
     {
       path: '/', name: 'Home', component: Home
+    },
+    {
+      path: '/login', name: 'Login', component: Login
+    },
+    {
+      path: '/register', name: 'Register', component: Register
     },
     {
       path: '/m', component: ManageIndex, children: [

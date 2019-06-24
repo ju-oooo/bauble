@@ -6,7 +6,7 @@ import OrdinaryControl from '@/views/user/ordinary/OrdinaryControl'
 import UserInfo from '@/components/user/UserInfo'
 import AdminControl from '@/views/user/admin/AdminControl'
 import OrdinaryList from '@/views/user/admin/OrdinaryList'
-import BookIndex from '@/views/book/BookIndex'
+
 import Commodity from '@/views/commodity/Commodity'
 import CommodityIndex from '@/views/commodity/CommodityIndex'
 import CommodityList from '@/views/commodity/CommodityList'
@@ -39,10 +39,6 @@ export default new Router({
         {
           path: 'admin/list', name: 'ordinaryList', component: OrdinaryList
         },
-        //book
-        {
-          path: 'book', name: ' bookIndex', component: BookIndex
-        }
       ]
     },
     {

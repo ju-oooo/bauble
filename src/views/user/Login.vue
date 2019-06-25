@@ -3,7 +3,7 @@
     <Header :activeIndex="'/commodity'" :backgroundColor="'#fff'" :color="'#545C64'"></Header>
     <div class="bgImage">
       <el-row class="login">
-        <el-col :xs="22" :sm="10" :md="6" :lg="6" class="login-bg">
+        <el-col :xs="22" :sm="10" :md="8" :lg="6" class="login-bg">
           <h2 class="title">登录</h2>
           <el-form :model="loginForm" status-icon :rules="loginRules" ref="loginForm">
             <el-form-item label="账号" prop="username">
@@ -28,6 +28,7 @@
 <script>
   import {mapActions, mapGetters} from 'vuex';
   import Header from "../../components/include/Header";
+
   export default {
     name: "Login",
     components: {Header},
@@ -62,22 +63,19 @@
       };
     }, computed: {
       ...mapGetters({
-        getIsLogin: 'isLoginGetter'
+        isLogin: 'isLoginGetter'
       })
     },
     methods: {
-      ...mapActions({
-        login: 'loginAction'
-      }),
       //提交信息
       submitForm() {
         this.$refs['loginForm'].validate((valid) => {
           if (valid) {
             let payload = {
               username: this.loginForm.username,
-              password:this.loginForm.password
+              password: this.loginForm.password
             };
-            let flag = this.$store.dispatch('commodityDetailsAction', payload);
+            let flag = this.$store.dispatch('loginAction', payload);
             //判断是否登录成功
             if (flag) {
               this.$router.push({name: "Home"})

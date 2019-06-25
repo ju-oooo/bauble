@@ -19,10 +19,12 @@ const actions = {
   //注册
   registerAction: (context, payload) => {
     // let temp = '{"type": \"' + getType(param[0]) + '\", "parameter": \"' + param[0] + '\", "password": \"' + getPassword(param[1]) + '\"}';
-    let data = qs.stringify({'user': temp})
+    // let data = qs.stringify({'user': temp})
     axios.post("/bauble/user/register", qs.stringify(payload))
       .then(result => {
+        console.log(result)
         context.commit('SET_USERNAME', {'username': result.data['username']})
+        return true;
       })
   },
   //登录
@@ -31,13 +33,17 @@ const actions = {
     //   'type': getType(param[0]),
     //   'username': param[0],
     //   'password': getPassword(param[1]),
-    //   'token': null,
+    //   'token': null
     // })
     payload.type = getType(payload.username);
     payload.token = null;
+    console.log(payload);
     axios.post("/bauble/user/login", qs.stringify(payload)).then(result => {
-      context.commit('SET_USERINFO', [result.data['user'], result.data['token']]);
-      context.commit('SET_ISLOGIN', true);
+      console.log(result)
+      if (result.data.code === 200) {
+        context.commit('SET_USERINFO', payload);
+        context.commit('SET_ISLOGIN', true);
+      }
     })
   }
 }

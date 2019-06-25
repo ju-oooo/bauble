@@ -6,8 +6,8 @@
     :background-color="backgroundColor"
     :text-color="color"
     active-text-color="#E24F3A">
-    <el-menu-item index="/">首页</el-menu-item>
-    <el-menu-item index="/commodity">商城</el-menu-item>
+<!--    <el-menu-item index="/">首页</el-menu-item>-->
+    <el-menu-item index="/commodity">首页</el-menu-item>
     <el-menu-item index="/commodity/o/list">商品列表</el-menu-item>
     <el-menu-item index="/commodity/shoppingCart">购物车</el-menu-item>
     <el-submenu index="3">

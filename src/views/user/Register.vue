@@ -3,7 +3,7 @@
     <Header :activeIndex="'/commodity'" :backgroundColor="'#fff'" :color="'#545C64'"></Header>
     <div class="bgImage">
       <el-row class="register">
-        <el-col :xs="22" :sm="10" :md="6" :lg="6" class="register-bg">
+        <el-col :xs="22" :sm="10" :md="8" :lg="6" class="register-bg">
           <h2 class="title">新用户注册</h2>
           <el-form :model="registerForm" status-icon :rules="registerRules" ref="registerForm">
             <el-form-item label="账号" prop="username">
@@ -26,36 +26,6 @@
         </el-col>
       </el-row>
     </div>
-    <!--    <div id="register">-->
-    <!--      <div v-if="getUserInfo.username == undefined">-->
-    <!--        <h2>注 册</h2>-->
-    <!--        <el-form :model="registerForm" status-icon :rules="registerRules" ref="registerForm">-->
-    <!--          <el-form-item label="账号" prop="username">-->
-    <!--            <el-input type="text" v-model="registerForm.username" placeholder="手机号/邮箱/身份证号"></el-input>-->
-    <!--          </el-form-item>-->
-    <!--          <el-form-item label="密码" prop="password">-->
-    <!--            <el-input type="password" v-model="registerForm.password"></el-input>-->
-    <!--          </el-form-item>-->
-    <!--          <el-form-item label="确认密码" prop="checkPassword">-->
-    <!--            <el-input type="password" v-model="registerForm.checkPassword"></el-input>-->
-    <!--          </el-form-item>-->
-    <!--          &lt;!&ndash;自动登录&ndash;&gt;-->
-    <!--          <el-form-item>-->
-    <!--            <el-button type="primary" @click="submitForm('registerForm')">注 册</el-button>-->
-    <!--            <router-link to="/login" style="float: right;">-->
-    <!--              <small>有账号，立即登录</small>-->
-    <!--            </router-link>-->
-    <!--          </el-form-item>-->
-    <!--        </el-form>-->
-    <!--      </div>-->
-    <!--      <div v-else class="info">-->
-    <!--        <span>恭喜您注册成功，账号为&nbsp;&nbsp;</span>-->
-    <!--        <strong>{{getUserInfo.username}}</strong>-->
-    <!--        <p>-->
-    <!--          <router-link to="/login">去登录</router-link>-->
-    <!--        </p>-->
-    <!--      </div>-->
-    <!--    </div>-->
   </div>
 </template>
 
@@ -125,14 +95,15 @@
       "$state": "userInfoGetter",
     },
     methods: {
-      ...mapActions({
-        register: 'registerAction'
-      }),
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             //成功
-            this.Register([this.registerForm.username, this.registerForm.password])
+            let payload = {
+              username: this.registerForm.username,
+              password: this.registerForm.password
+            };
+            this.$store.dispatch('registerAction', payload)
           } else {
             console.log('error submit!!');
             return false;

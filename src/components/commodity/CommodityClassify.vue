@@ -181,20 +181,15 @@
         this.$store.dispatch('commodityListAction', payload);
       },
 
-    },
-    mounted() {
       /**
-       * 添加滚动监听
+       * 距离下方300px请求数据
        */
-      window.addEventListener('scroll', () => {
-        /**
-         * 距离下方200px请求数据
-         */
+      scrollhandle() {
         if (!this.loadingFlag && document.documentElement.scrollHeight - document.documentElement.scrollTop - window.innerHeight <= 300) {
           if (!this.dataEnd) {
             let commit = [{key: 'loadingFlag', value: true}];
             this.$store.commit('SET_STATEITEM', commit);
-            console.log(this.searchList.length)
+            console.log(this.searchList);
             if (this.searchList.length >= 1) {
               this.getCommodityList();
             } else {
@@ -202,7 +197,16 @@
             }
           }
         }
-      })
+      }
+    },
+    mounted() {
+      /**
+       * 添加滚动监听
+       */
+      window.addEventListener('scroll', this.scrollhandle);
+    },
+    beforeDestroy() {
+      window.removeEventListener('scroll', this.scrollhandle);
     }
   }
 </script>

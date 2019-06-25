@@ -190,7 +190,7 @@
         /**
          * 距离下方200px请求数据
          */
-        if (!this.loadingFlag && document.documentElement.scrollHeight - document.documentElement.scrollTop - window.innerHeight <= 200) {
+        if (!this.loadingFlag && document.documentElement.scrollHeight - document.documentElement.scrollTop - window.innerHeight <= 300) {
           if (!this.dataEnd) {
             let commit = [{key: 'loadingFlag', value: true}];
             this.$store.commit('SET_STATEITEM', commit);

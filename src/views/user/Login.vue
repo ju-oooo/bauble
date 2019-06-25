@@ -28,7 +28,6 @@
 <script>
   import {mapActions, mapGetters} from 'vuex';
   import Header from "../../components/include/Header";
-
   export default {
     name: "Login",
     components: {Header},
@@ -45,7 +44,6 @@
           callback(new Error('请输入密码'));
         } else {
           callback();
-          ``
         }
       };
       return {
@@ -71,10 +69,16 @@
       ...mapActions({
         login: 'loginAction'
       }),
+      //提交信息
       submitForm() {
         this.$refs['loginForm'].validate((valid) => {
           if (valid) {
-            let flag = this.login([this.loginForm.username, this.loginForm.password]);
+            let payload = {
+              username: this.loginForm.username,
+              password:this.loginForm.password
+            };
+            let flag = this.$store.dispatch('commodityDetailsAction', payload);
+            //判断是否登录成功
             if (flag) {
               this.$router.push({name: "Home"})
             }

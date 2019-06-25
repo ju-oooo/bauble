@@ -17,38 +17,27 @@ const getters = {
 //action 异步的操作
 const actions = {
   //注册
-  registerAction: (context, param) => {
-    let temp = '{"type": \"' + getType(param[0]) + '\", "parameter": \"' + param[0] + '\", "password": \"' + getPassword(param[1]) + '\"}';
+  registerAction: (context, payload) => {
+    // let temp = '{"type": \"' + getType(param[0]) + '\", "parameter": \"' + param[0] + '\", "password": \"' + getPassword(param[1]) + '\"}';
     let data = qs.stringify({'user': temp})
-    axios.post("/bauble/user/register", data)
+    axios.post("/bauble/user/register", qs.stringify(payload))
       .then(result => {
-        if (result.data['message'] === 'success') {
-          context.commit('SET_MESSAGE', ['success', '执行成功'])
-          context.commit('SET_USERNAME', {'username': result.data['username']})
-        } else {
-          context.commit('SET_MESSAGE', ['error', result.data['message']])
-        }
+        context.commit('SET_USERNAME', {'username': result.data['username']})
       })
   },
   //登录
-  loginAction: (context, param) => {
-    let data = qs.stringify({
-      'type': getType(param[0]),
-      'username': param[0],
-      'password': getPassword(param[1]),
-      'token': null,
-    })
-    axios.post("/bauble/user/login", data).then(result => {
-
-      if (result.data['message'] === 'success') {
-        context.commit('SET_MESSAGE', ['success', '执行成功']);
-        context.commit('SET_USERINFO', [result.data['user'], result.data['token']]);
-        context.commit('SET_ISLOGIN', true);
-        return true
-      } else {
-        context.commit('SET_MESSAGE', ['error', result.data['message']]);
-      }
-
+  loginAction: (context, payload) => {
+    // let data = qs.stringify({
+    //   'type': getType(param[0]),
+    //   'username': param[0],
+    //   'password': getPassword(param[1]),
+    //   'token': null,
+    // })
+    payload.type = getType(payload.username);
+    payload.token = null;
+    axios.post("/bauble/user/login", qs.stringify(payload)).then(result => {
+      context.commit('SET_USERINFO', [result.data['user'], result.data['token']]);
+      context.commit('SET_ISLOGIN', true);
     })
   }
 }

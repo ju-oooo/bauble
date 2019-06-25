@@ -26,10 +26,7 @@
     components: {CommodityClassify},
     data() {
       return {
-        // count: 20,
-        // pageNum: 1,
-        // typeId: 11209,
-        // catalogueTypeList: {}
+
       }
     },
     created() {

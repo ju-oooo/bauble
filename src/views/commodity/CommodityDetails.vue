@@ -12,19 +12,14 @@
           </p>
           <p class="price">￥ {{commodity.price}}</p>
           <p class="type">商品类型&nbsp;:&nbsp;<span>{{getType()}}</span></p>
-          <p class="time">发布时间&nbsp;:&nbsp;<span>今年</span></p>
-          <p class="surplus">剩余库存&nbsp;:&nbsp;<span>999+</span></p>
-          <p class="hint">温馨提示·支持7天无理由退货·此商品不可使用优惠券</p>
+          <p class="hint">价格仅供参考，具体价格及优惠请查看官网</p>
           <p class="btn">
-            <a href="javascript:;" class="btn-n cart">加入购物车</a>
-            <a href="javascript:;" class="btn-n buy">立即购买</a>
+            <a :href="'http:'+commodity.realLink" target="_blank" class="btn-n into">进入店铺</a>
+            <a href="javascript:;" class="btn-n collection" @click="addFavorite">收藏商品+</a>
           </p>
         </el-col>
       </el-row>
-      <p class="operation">
-        <a :href="'http:'+commodity.realLink" target="_blank" class="share">进入店铺</a>
-        <a href="javascript:;" class="collection">收藏商品+</a>
-      </p>
+
     </el-col>
     <!--  猜你喜欢  -->
     <el-col>
@@ -59,6 +54,7 @@
     },
     computed: {
       ...mapGetters({
+        'isLogin': 'isLoginGetter',
         'classifyList': 'classifyListGetter',
         'commodity': 'commodityDetailsGetter',
         'hotCommodityList': 'hotCommodityListGetter'
@@ -71,6 +67,17 @@
       // ...mapActions({
       //   'commodityDetails': 'commodityDetailsAction'
       // }),
+      //添加收藏
+      addFavorite() {
+        if (!this.isLogin) {
+          return this.$message.warning('请登录')
+        }
+        let commodityId = this.$route.params.commodityId;
+        let payload = {
+          commodityId: commodityId
+        };
+        this.$store.dispatch('commodityDetailsAction', payload);
+      },
       //获取商品详情
       getCommodityDetails() {
         let commodityId = this.$route.params.commodityId;
@@ -185,32 +192,16 @@
         font-size: 2rem;
       }
 
-
-      .type {
-
-      }
-
-      .time {
-
-      }
-
-      .surplus {
-
-      }
-
-      .sold {
-
-      }
-
       .hint {
-        display: block;
+        /*display: block;*/
         color: $gray;
+        font-size: 0.9rem;
         padding: 0.8rem;
         background-color: $light-gray;
       }
 
       .btn {
-        margin: 1rem 0;
+        margin: 4rem 0 !important;
         display: flex;
         justify-content: center;
         font-size: 1rem;
@@ -222,8 +213,29 @@
           line-height: 2.7rem;
           text-align: center;
 
-          &.cart {
+          &.into {
+            background-color: $red;
+            color: $white;
             margin-right: 3.5rem;
+
+            &:hover {
+              opacity: 0.9;
+              cursor: pointer;
+            }
+          }
+
+          &.collection {
+            background-color: $light-o-gray;
+            color: $white;
+
+            &:hover {
+              opacity: 0.9;
+              cursor: pointer;
+            }
+          }
+
+          &.cart {
+
             background-color: $black;
           }
 
@@ -231,50 +243,13 @@
             background-color: $red;
           }
 
+
           &:hover {
             opacity: 0.8;
             cursor: pointer;
           }
         }
       }
-    }
-  }
-
-  .operation {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1rem;
-    padding-bottom: 3rem;
-    font-size: 1rem;
-
-    a {
-      display: block;
-      width: 10rem;
-      height: 2.7rem;
-      line-height: 2.7rem;
-      text-align: center;
-      margin: 0 1.75rem;
-
-      &.share {
-        background-color: $red;
-        color: $white;
-
-        &:hover {
-          opacity: 0.8;
-          cursor: pointer;
-        }
-      }
-
-      &.collection {
-        background-color: $light-o-gray;
-        color: $black;
-
-        &:hover {
-          opacity: 0.8;
-          cursor: pointer;
-        }
-      }
-
     }
   }
 

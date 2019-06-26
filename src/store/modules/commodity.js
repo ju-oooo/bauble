@@ -15,8 +15,8 @@ const state = {
   loadingFlag: false,
   dataEnd: false,
   commodityDetails: {},
-  //购物车列表
-  shoppingCartList: [
+  //收藏列表
+  favoriteList: [
     {
       id: 131587,
       image: "https://img10.360buyimg.com/cms/s80x80_jfs/t1/27029/16/10303/84563/5c860b8cE7ae9705f/91cbbed521515472.jpg",
@@ -39,19 +39,29 @@ const getters = {
   dataEndGetter: state => state.dataEnd,
   commodityDetailsGetter: state => state.commodityDetails,
   hotCommodityListGetter: state => state.hotCommodityList,
-  shoppingCartListGetter: state => state.shoppingCartList,
+  favoriteListGetter: state => state.favoriteList,
 }
 
 //action 异步的操作
 const actions = {
   //添加商品进购物车
-  addShoppingCartAction: (context) => {
+  addFavoriteAction: (context) => {
     axios.post("/bauble/commodity/")
       .then(result => {
         console.log(result['data'].result);
         context.commit('SET_SHOPPINGCARTLIST', result['data'].result)
       }).catch(err => {
       this.$message("内部错误")
+    })
+  },
+  // 获取收藏列表
+  favoriteListAction: (context, payload) => {
+    axios.post('/bauble/commodity/favorite', qs.stringify(payload))
+      .then(result => {
+        console.log(result['data'].result);
+        context.commit('SET_FAVORITELIST', result['data'].result)
+      }).catch(err => {
+      // this.state.$message("内部错误")
     })
   },
   //获取商品类型以及分类
@@ -87,23 +97,13 @@ const actions = {
       // this.state.$message("内部错误")
     })
   },
-  // 获取购物车列表
-  shoppingCartListAction: (context, payload) => {
-    axios.post('/bauble/commodity/shoppingCard', qs.stringify(payload))
-      .then(result => {
-        console.log(result['data'].result);
-        context.commit('SET_SHOPPINGCARDLIST', result['data'].result)
-      }).catch(err => {
-      // this.state.$message("内部错误")
-    })
-  },
+
 }
 //mutation
 const mutations = {
   //设置购物车商品列表
-  SET_SHOPPINGCARTLIST: (state, param) => {
-    state.shoppingCartList = '';
-    state.shoppingCartList = param;
+  SET_FAVORITELIST: (state, param) => {
+    state.favoriteList = state.favoriteList.concat(param);
   },
   //设置热门商品列表
   SET_HOTCOMMODITYLIST: (state, param) => {

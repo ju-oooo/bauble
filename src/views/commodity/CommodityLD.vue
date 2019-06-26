@@ -9,15 +9,7 @@
 
 <script>
   export default {
-    name: "CommodityLD",
-    data() {
-      return {
-
-      }
-    },
-    created() {
-    },
-    methods: {}
+    name: "CommodityLD"
   }
 </script>
 

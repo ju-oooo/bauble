@@ -51,6 +51,10 @@
     },
     created() {
       this.getCommodityDetails();
+      if (sessionStorage.length > 0) {
+        this.$store.commit('SET_USERINFO', JSON.parse(sessionStorage.getItem('userInfo')))
+        this.$store.commit('SET_ISLOGIN', true)
+      }
     },
     computed: {
       ...mapGetters({

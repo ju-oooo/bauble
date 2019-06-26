@@ -2,9 +2,10 @@ import axios from 'axios';
 import qs from 'qs';
 import {getType, putLocalStorage} from '../../api/apiUser'
 
+axios.defaults.withCredentials = true;
 //初始化数据
 const state = {
-  userInfo: {},
+  userInfo: [],
   isLogin: false
 }
 
@@ -30,10 +31,10 @@ const actions = {
     payload.token = null;
     console.log(payload);
     axios.post("/bauble/user/login", qs.stringify(payload)).then(result => {
-
       if (result.data.code === 200) {
         context.commit('SET_USERINFO', payload);
         context.commit('SET_ISLOGIN', true);
+        sessionStorage.setItem('userInfo', JSON.stringify(payload));
       }
     })
   }
@@ -42,18 +43,15 @@ const actions = {
 const mutations = {
   //设置用户信息
   SET_USERINFO: (state, param) => {
-    console.log(param)
-    let user = param
-    for (let temp in user) {
-      if (user[temp] !== null && user[temp] !== undefined) {
-        state.userInfo[temp] = user[temp]
+    for (let temp in param) {
+      if (param[temp] !== null && param[temp] !== undefined) {
+        state.userInfo[temp] = param[temp]
       }
     }
     putLocalStorage(['userToken', param[1]]);
   },
-  //设置是否登录
-  SET_ISLOGIN: (state, param) => {
-    state.isLogin = param
+  SET_ISLOGIN: () => {
+    state.isLogin = true;
   }
 }
 

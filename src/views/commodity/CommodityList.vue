@@ -17,7 +17,7 @@
       return {}
     },
     created() {
-      this.init()
+
     },
     computed: {
       ...mapGetters({

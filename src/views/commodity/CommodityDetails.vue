@@ -15,7 +15,9 @@
           <p class="hint">价格仅供参考，具体价格及优惠请查看官网</p>
           <p class="btn">
             <a :href="'http:'+commodity.realLink" target="_blank" class="btn-n into">进入店铺</a>
-            <a href="javascript:;" class="btn-n collection" @click="addFavorite">收藏商品+</a>
+
+            <a href="javascript:;" class="btn-n collection" v-if="favorite" @click="addFavorite">收藏商品+</a>
+            <a href="javascript:;" class="btn-n collection" v-else @click="removeFavorite">取消收藏</a>
           </p>
         </el-col>
       </el-row>
@@ -51,18 +53,17 @@
     },
     created() {
       this.getCommodityDetails();
-      if (sessionStorage.length > 0) {
-        this.$store.commit('SET_USERINFO', JSON.parse(sessionStorage.getItem('userInfo')))
-        this.$store.commit('SET_ISLOGIN', true)
-      }
     },
     computed: {
       ...mapGetters({
-        'isLogin': 'isLoginGetter',
+        'userInfo': 'userInfoGetter',
         'classifyList': 'classifyListGetter',
         'commodity': 'commodityDetailsGetter',
         'hotCommodityList': 'hotCommodityListGetter'
       }),
+      favorite() {
+        return this.commodity.favorite < 1;
+      }
     },
     watch: {
       // 如果路由有变化，会再次执行该方法
@@ -73,14 +74,29 @@
       // }),
       //添加收藏
       addFavorite() {
-        if (!this.isLogin) {
+        // console.log(this.userInfo)
+        if (!this.userInfo.id) {
           return this.$message.warning('请登录')
+        } else {
+          let commodityId = this.$route.params.commodityId;
+          let payload = {
+            userId: this.userInfo.id,
+            commodityId: commodityId,
+            time: new Date().getTime()
+          }
+          this.commodity.favorite = 1;
+          this.$store.dispatch('addFavoriteAction', payload);
         }
+      },
+      //删除收藏
+      removeFavorite() {
         let commodityId = this.$route.params.commodityId;
         let payload = {
+          userId: this.userInfo.id,
           commodityId: commodityId
-        };
-        this.$store.dispatch('commodityDetailsAction', payload);
+        }
+        this.commodity.favorite = 0;
+        this.$store.dispatch('removeFavoriteAction', payload);
       },
       //获取商品详情
       getCommodityDetails() {
@@ -89,6 +105,9 @@
         let payload = {
           commodityId: commodityId
         };
+        if (this.userInfo.id) {
+          payload.userId = this.userInfo.id
+        }
         this.$store.dispatch('commodityDetailsAction', payload);
       },
       //根据id 获取类型名称
@@ -153,7 +172,6 @@
         margin-bottom: 1rem;
       }
     }
-
   }
 
   //产品细节 end
@@ -165,13 +183,11 @@
     text-align: left;
 
     .detail-left {
-      padding: 1rem;
+      padding: 2rem;
       text-align: center;
 
       img {
-        max-width: 37rem !important;
-        height: 30rem;
-        width: 100%;
+        max-height: 26rem !important;
       }
     }
 
@@ -197,7 +213,6 @@
       }
 
       .hint {
-        /*display: block;*/
         color: $gray;
         font-size: 0.9rem;
         padding: 0.8rem;
@@ -212,10 +227,11 @@
 
         .btn-n {
           width: 10rem;
-          height: 2.7rem;
+          height: 2.5rem;
           color: $white;
-          line-height: 2.7rem;
+          line-height: 2.5rem;
           text-align: center;
+          border: 1px solid $red;
 
           &.into {
             background-color: $red;
@@ -223,23 +239,22 @@
             margin-right: 3.5rem;
 
             &:hover {
-              opacity: 0.9;
+              opacity: 0.8;
               cursor: pointer;
             }
           }
 
           &.collection {
-            background-color: $light-o-gray;
-            color: $white;
+            background-color: $light-red;
+            color: $red;
 
             &:hover {
-              opacity: 0.9;
+              opacity: 0.8;
               cursor: pointer;
             }
           }
 
           &.cart {
-
             background-color: $black;
           }
 

@@ -10,17 +10,14 @@
     <el-menu-item index="/commodity">首页</el-menu-item>
     <el-menu-item index="/commodity/o/list">商品列表</el-menu-item>
     <el-menu-item index="/commodity/favorite">收藏夹</el-menu-item>
-    <el-submenu index="3">
-      <template slot="title">用户列表</template>
-      <el-menu-item index="2-1">我的</el-menu-item>
-      <el-menu-item index="2-2">注销</el-menu-item>
-    </el-submenu>
+
     <div v-if="!isLogin">
       <el-menu-item index="/register" style="float: right;">注册</el-menu-item>
       <el-menu-item index="/login" style="float: right;">登录</el-menu-item>
     </div>
     <div v-else>
-      <el-menu-item index="/info" style="float: right;">{{userInfo.username}}</el-menu-item>
+      <el-menu-item style="float: right;" @click="logout">注销</el-menu-item>
+      <el-menu-item style="float: right;">{{userInfo.username}}</el-menu-item>
     </div>
   </el-menu>
 </template>
@@ -34,10 +31,23 @@
     data() {
       return {};
     },
-    computed: {
-      ...mapGetters({'isLogin': 'isLoginGetter', userInfo: 'userInfoGetter'})
+    created() {
+      if (sessionStorage.length > 0) {
+        this.$store.commit('SET_USERINFO', JSON.parse(sessionStorage.getItem('userInfo')))
+        this.$store.commit('SET_ISLOGIN', true)
+      }
     },
-    methods: {}
+    computed: {
+      ...mapGetters({isLogin: 'isLoginGetter', userInfo: 'userInfoGetter'})
+    },
+    methods: {
+      logout() {
+        sessionStorage.clear();
+        this.$store.commit('SET_ISLOGIN', false)
+        this.$message('注销成功')
+        this.$router.push({name: 'Login'})
+      }
+    }
   }
 
 

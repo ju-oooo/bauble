@@ -25,7 +25,7 @@ export default new Router({
     //   path: '/', name: 'Home', component: Home
     // },
     {
-      path: '/', name: 'Home', redirect: {name: 'commodityIndex'},component: Home
+      path: '/', name: 'Home', redirect: {name: 'commodityIndex'}, component: Home
     },
     {
       path: '/login', name: 'Login', component: Login
@@ -37,39 +37,39 @@ export default new Router({
       path: '/m', component: ManageIndex, children: [
         // user 普通用户
         {
-          path: '/', name: 'ordinaryControl', component: OrdinaryControl,
+          path: '/', name: 'OrdinaryControl', component: OrdinaryControl,
         },
         //admin 管理员用户
         {
-          path: 'admin', name: 'adminControl', component: AdminControl
+          path: 'admin', name: 'AdminControl', component: AdminControl
         },
         //用户信息
         {
-          path: 'info', name: 'userInfo', component: UserInfo
+          path: 'info', name: 'UserInfo', component: UserInfo
         },
         // admin/list
         {
-          path: 'admin/list', name: 'ordinaryList', component: OrdinaryList
+          path: 'admin/list', name: 'OrdinaryList', component: OrdinaryList
         },
       ]
     },
     {
       path: '/commodity', component: Commodity, children: [
         {
-          path: '/', name: 'commodityIndex', component: CommodityIndex
+          path: '/', name: 'CommodityIndex', component: CommodityIndex
         },
         {
-          path: 'o', component: CommodityLD, redirect: {name: 'commodityList'}, children: [
+          path: 'o', component: CommodityLD, redirect: {name: 'CommodityList'}, children: [
             {
-              path: 'list', name: 'commodityList', component: CommodityList,
+              path: 'list', name: 'CommodityList', component: CommodityList,
             },
             {
-              path: 'details/:commodityId', name: 'commodityDetails', component: CommodityDetails
+              path: 'details/:commodityId', name: 'CommodityDetails', component: CommodityDetails
             },
           ]
         },
         {
-          path:'favorite',name:'commodityFavorite',component:CommodityFavorite
+          path: 'favorite', name: 'CommodityFavorite', component: CommodityFavorite
         },
       ]
     },

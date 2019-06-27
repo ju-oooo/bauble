@@ -16,16 +16,7 @@ const state = {
   dataEnd: false,
   commodityDetails: {},
   //收藏列表
-  favoriteList: [
-    {
-      id: 131587,
-      image: "https://img10.360buyimg.com/cms/s80x80_jfs/t1/27029/16/10303/84563/5c860b8cE7ae9705f/91cbbed521515472.jpg",
-      title: '松下（Panasonic） 32/43英寸 窄边框老人机高清液晶 松下（Panasonic） 32/43英寸 窄边框老人机高清液晶 松下（Panasonic） 32/43英寸 窄边框老人机高清液晶 松下（Panasonic） 32/43英寸 窄边框老人机高清液晶 平板电视机 32寸液晶',
-      price: 999999,
-      quantity: 1,
-      subtotal: 99999999999
-    }
-  ]
+  favoriteList: []
 }
 
 //getter 抛出去的数据
@@ -44,22 +35,30 @@ const getters = {
 
 //action 异步的操作
 const actions = {
-  //添加商品进购物车
-  addFavoriteAction: (context) => {
-    axios.post("/bauble/commodity/")
+  //添加收藏
+  addFavoriteAction: (context, payload) => {
+    axios.post("/bauble/commodity/addFavorite", qs.stringify(payload))
       .then(result => {
-        console.log(result['data'].result);
-        context.commit('SET_SHOPPINGCARTLIST', result['data'].result)
+        console.log(result.data);
       }).catch(err => {
-      this.$message("内部错误")
+      // this.$message("内部错误")
+    })
+  },
+  //取消收藏
+  removeFavoriteAction: (context, payload) => {
+    axios.post("/bauble/commodity/removeFavorite", qs.stringify(payload))
+      .then(result => {
+        console.log(result.data);
+      }).catch(err => {
+      // this.$message("内部错误")
     })
   },
   // 获取收藏列表
   favoriteListAction: (context, payload) => {
     axios.post('/bauble/commodity/favorite', qs.stringify(payload))
       .then(result => {
-        console.log(result['data'].result);
-        context.commit('SET_FAVORITELIST', result['data'].result)
+        console.log(result.data);
+        context.commit('SET_FAVORITELIST', result.data.favoriteList)
       }).catch(err => {
       // this.state.$message("内部错误")
     })
@@ -86,6 +85,7 @@ const actions = {
   },
   //获取商品详情
   commodityDetailsAction: (context, payload) => {
+    console.log(payload)
     axios.post('/bauble/commodity/details', qs.stringify(payload)).then(result => {
       let res = result['data'].details;
       res.image = res.image.replace('n7', 'n1')
@@ -103,7 +103,7 @@ const actions = {
 const mutations = {
   //设置购物车商品列表
   SET_FAVORITELIST: (state, param) => {
-    state.favoriteList = state.favoriteList.concat(param);
+    state.favoriteList = param;
   },
   //设置热门商品列表
   SET_HOTCOMMODITYLIST: (state, param) => {

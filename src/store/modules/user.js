@@ -32,9 +32,9 @@ const actions = {
     console.log(payload);
     axios.post("/bauble/user/login", qs.stringify(payload)).then(result => {
       if (result.data.code === 200) {
-        context.commit('SET_USERINFO', payload);
+        context.commit('SET_USERINFO', result.data.userInfo);
         context.commit('SET_ISLOGIN', true);
-        sessionStorage.setItem('userInfo', JSON.stringify(payload));
+        sessionStorage.setItem('userInfo', JSON.stringify(result.data.userInfo));
       }
     })
   }
@@ -50,8 +50,8 @@ const mutations = {
     }
     putLocalStorage(['userToken', param[1]]);
   },
-  SET_ISLOGIN: () => {
-    state.isLogin = true;
+  SET_ISLOGIN: (state, param) => {
+    state.isLogin = param;
   }
 }
 

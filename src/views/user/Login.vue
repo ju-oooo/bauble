@@ -78,7 +78,7 @@
             let flag = this.$store.dispatch('loginAction', payload);
             //判断是否登录成功
             if (flag) {
-              this.$router.push({name: "Home"})
+              this.$router.push({name:'CommodityIndex'})
             }
           } else {
             console.log('error submit!!');

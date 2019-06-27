@@ -3,7 +3,7 @@
     <el-col :span="24" class="commodity-guess">
       <p>您可能还喜欢</p>
       <el-row class="guess-list">
-        <router-link :to="{name:'commodityDetails',params:{commodityId:hotCommodity.id}}"
+        <router-link :to="{name:'CommodityDetails',params:{commodityId:hotCommodity.id}}"
                      v-for="(hotCommodity,index) in hotCommodityList" :key="index" target="_blank">
           <el-col :xs="12" :sm="12" :md="6" :xl="6" class="guess-item">
             <div class="guess-item-img">

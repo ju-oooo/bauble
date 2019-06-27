@@ -1,6 +1,6 @@
 <template>
   <el-row class="p-list" justify="start">
-    <router-link :to="{name:'commodityDetails',params:{commodityId:commodity.id}}"
+    <router-link :to="{name:'CommodityDetails',params:{commodityId:commodity.id}}"
                  v-for="(commodity,index) of commodityList" :key="index" target="_blank">
       <el-col :xs="12" :sm="8" :md="6" :xl="4" class="item">
         <div>

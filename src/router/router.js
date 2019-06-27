@@ -25,7 +25,7 @@ export default new Router({
     //   path: '/', name: 'Home', component: Home
     // },
     {
-      path: '/', name: 'Home', redirect: {name: 'commodityIndex'}, component: Home
+      path: '/', name: 'Home', redirect: {name: 'CommodityIndex'}, component: Home
     },
     {
       path: '/login', name: 'Login', component: Login

@@ -85,7 +85,7 @@ const actions = {
   },
   //获取商品详情
   commodityDetailsAction: (context, payload) => {
-    console.log(payload)
+    // console.log(payload)
     axios.post('/bauble/commodity/details', qs.stringify(payload)).then(result => {
       let res = result['data'].details;
       res.image = res.image.replace('n7', 'n1')

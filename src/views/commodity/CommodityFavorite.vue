@@ -5,7 +5,8 @@
     <el-col :md="2">&nbsp;</el-col>
     <el-col :md="20">
       <p class="title">收藏夹</p>
-      <commodity-lists v-if="classifyList.length<0" :classifyList="classifyList"
+
+      <commodity-lists v-if="favoriteList.length>0" :classifyList="classifyList"
                        :commodityList="favoriteList"></commodity-lists>
       <div v-else>
         <p class="none">空空如也</p>

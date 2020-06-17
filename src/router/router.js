@@ -1,21 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home'
-import ManageIndex from '@/views/ManageIndex'
-import OrdinaryControl from '@/views/user/ordinary/OrdinaryControl'
-import UserInfo from '@/components/user/UserInfo'
-import AdminControl from '@/views/user/admin/AdminControl'
-import OrdinaryList from '@/views/user/admin/OrdinaryList'
-
-import Login from '@/views/user/Login'
-import Register from '@/views/user/Register'
-
-import Commodity from '@/views/commodity/Commodity'
-import CommodityIndex from '@/views/commodity/CommodityIndex'
-import CommodityList from '@/views/commodity/CommodityList'
-import CommodityDetails from '@/views/commodity/CommodityDetails'
-import CommodityLD from "@/views/commodity/CommodityLD";
-import CommodityFavorite from "../views/commodity/CommodityFavorite";
 
 Vue.use(Router);
 
@@ -25,51 +9,51 @@ export default new Router({
     //   path: '/', name: 'Home', component: Home
     // },
     {
-      path: '/', name: 'Home', redirect: {name: 'CommodityIndex'}, component: Home
+      path: '/', name: 'Home', redirect: {name: 'CommodityIndex'}, component: ()=>import("@/views/Home")
     },
     {
-      path: '/login', name: 'Login', component: Login
+      path: '/login', name: 'Login', component: ()=>import("@/views/user/Login")
     },
     {
-      path: '/register', name: 'Register', component: Register
+      path: '/register', name: 'Register', component: ()=>import("@/views/user/Register")
     },
     {
-      path: '/m', component: ManageIndex, children: [
+      path: '/m', component: ()=>import("@/views/ManageIndex"), children: [
         // user 普通用户
         {
-          path: '/', name: 'OrdinaryControl', component: OrdinaryControl,
+          path: '/', name: 'OrdinaryControl', component: ()=>import("@/views/user/ordinary/OrdinaryControl"),
         },
         //admin 管理员用户
         {
-          path: 'admin', name: 'AdminControl', component: AdminControl
+          path: 'admin', name: 'AdminControl', component: ()=>import("@/views/user/admin/AdminControl"),
         },
         //用户信息
         {
-          path: 'info', name: 'UserInfo', component: UserInfo
+          path: 'info', name: 'UserInfo', component: ()=>import("@/components/user/UserInfo"),
         },
         // admin/list
         {
-          path: 'admin/list', name: 'OrdinaryList', component: OrdinaryList
+          path: 'admin/list', name: 'OrdinaryList', component: ()=>import("@/views/user/admin/OrdinaryList"),
         },
       ]
     },
     {
-      path: '/commodity', component: Commodity, children: [
+      path: '/commodity', component: ()=>import("@/views/commodity/Commodity"), children: [
         {
-          path: '/', name: 'CommodityIndex', component: CommodityIndex
+          path: '/', name: 'CommodityIndex', component: ()=>import("@/views/commodity/CommodityIndex")
         },
         {
-          path: 'o', component: CommodityLD, redirect: {name: 'CommodityList'}, children: [
+          path: 'o', component: ()=>import("@/views/commodity/CommodityLD"), redirect: {name: 'CommodityList'}, children: [
             {
-              path: 'list', name: 'CommodityList', component: CommodityList,
+              path: 'list', name: 'CommodityList', component: ()=>import("@/views/commodity/CommodityList"),
             },
             {
-              path: 'details/:commodityId', name: 'CommodityDetails', component: CommodityDetails
+              path: 'details/:commodityId', name: 'CommodityDetails', component: ()=>import("@/views/commodity/CommodityDetails")
             },
           ]
         },
         {
-          path: 'favorite', name: 'CommodityFavorite', component: CommodityFavorite
+          path: 'favorite', name: 'CommodityFavorite', component: ()=>import("@/views/commodity/CommodityFavorite")
         },
       ]
     },

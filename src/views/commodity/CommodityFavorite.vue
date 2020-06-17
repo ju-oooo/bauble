@@ -35,7 +35,7 @@
     },
     methods: {
       getFavoriteList() {
-        console.log(!this.userInfo.id)
+        // console.log(!this.userInfo.id)
         if (!this.userInfo.id) {
           return this.$message.warning('请登录')
         } else {

@@ -189,7 +189,7 @@
           if (!this.dataEnd) {
             let commit = [{key: 'loadingFlag', value: true}];
             this.$store.commit('SET_STATEITEM', commit);
-            console.log(this.searchList);
+            // console.log(this.searchList);
             if (this.searchList.length >= 1) {
               this.getCommodityList();
             } else {

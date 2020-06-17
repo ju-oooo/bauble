@@ -29,7 +29,7 @@ const actions = {
   loginAction: (context, payload) => {
     payload.type = getType(payload.username);
     payload.token = null;
-    console.log(payload);
+    // console.log(payload);
     axios.post("/bauble/user/login", qs.stringify(payload)).then(result => {
       if (result.data.code === 200) {
         context.commit('SET_USERINFO', result.data.userInfo);

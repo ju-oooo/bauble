@@ -102,7 +102,7 @@
     },
     watch: {
       fullHeight() {
-        console.log(this.fullHeight)
+        // console.log(this.fullHeight)
         this.menuHeight = this.menuHeight + 'px'
       }
     },

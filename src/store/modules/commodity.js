@@ -1,6 +1,8 @@
 import axios from 'axios';
 import qs from 'qs';
-import {Message} from 'element-ui'
+import {
+  Message
+} from 'element-ui'
 //商品
 //初始化数据
 const state = {
@@ -39,49 +41,49 @@ const actions = {
   addFavoriteAction: (context, payload) => {
     axios.post("/bauble/commodity/addFavorite", qs.stringify(payload))
       .then(result => {
-        console.log(result.data);
+        // console.log(result.data);
       }).catch(err => {
-      // this.$message("内部错误")
-    })
+        // this.$message("内部错误")
+      })
   },
   //取消收藏
   removeFavoriteAction: (context, payload) => {
     axios.post("/bauble/commodity/removeFavorite", qs.stringify(payload))
       .then(result => {
-        console.log(result.data);
+        // console.log(result.data);
       }).catch(err => {
-      // this.$message("内部错误")
-    })
+        // this.$message("内部错误")
+      })
   },
   // 获取收藏列表
   favoriteListAction: (context, payload) => {
     axios.post('/bauble/commodity/favorite', qs.stringify(payload))
       .then(result => {
-        console.log(result.data);
+        // console.log(result.data);
         context.commit('SET_FAVORITELIST', result.data.favoriteList)
       }).catch(err => {
-      // this.state.$message("内部错误")
-    })
+        // this.state.$message("内部错误")
+      })
   },
   //获取商品类型以及分类
   classifyListAction: (context) => {
     axios.post("/bauble/commodity/type")
       .then(result => {
-        console.log(result['data'].result);
+        // console.log(result['data'].result);
         context.commit('SET_CLASSIFYLIST', result['data'].result)
       }).catch(err => {
-      // this.$message("内部错误")
-    })
+        // this.$message("内部错误")
+      })
   },
   //获取商品列表
   commodityListAction: (context, payload) => {
     axios.post('/bauble/commodity/', qs.stringify(payload))
       .then(result => {
-        console.log(result['data'].result);
+        // console.log(result['data'].result);
         context.commit('SET_COMMODITYLIST', result['data'].result)
       }).catch(err => {
-      // this.state.$message("内部错误")
-    })
+        // this.state.$message("内部错误")
+      })
   },
   //获取商品详情
   commodityDetailsAction: (context, payload) => {
@@ -92,7 +94,7 @@ const actions = {
       res.details = res.details.split('#');
       context.commit('SET_COMMODITYDETAILS', res)
       context.commit('SET_HOTCOMMODITYLIST', result['data'].hotCommodityList)
-      console.log(result['data'].hotCommodityList)
+      // console.log(result['data'].hotCommodityList)
     }).catch(err => {
       // this.state.$message("内部错误")
     })
@@ -114,7 +116,7 @@ const mutations = {
   SET_COMMODITYDETAILS: (state, param) => {
     state.commodityDetails = '';
     state.commodityDetails = param;
-    console.log(state.commodityDetails);
+    // console.log(state.commodityDetails);
   },
   //设置类型详情
   SET_CLASSIFYLIST: (state, param) => {
@@ -141,7 +143,7 @@ const mutations = {
    */
   SET_STATEITEM: (state, param) => {
     param.forEach((elem) => {
-      console.log(elem);
+      // console.log(elem);
       state[elem.key] = elem.value;
     })
   },

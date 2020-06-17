@@ -124,7 +124,7 @@
     },
     created() {
       this.setImgHeight();
-      console.log(this.imgHeight)
+      // console.log(this.imgHeight)
     }
     , methods: {
       setImgHeight() {

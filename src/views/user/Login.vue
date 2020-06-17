@@ -81,7 +81,7 @@
               this.$router.push({name:'CommodityIndex'})
             }
           } else {
-            console.log('error submit!!');
+            // console.log('error submit!!');
             return false;
           }
         });
